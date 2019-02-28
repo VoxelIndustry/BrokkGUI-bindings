@@ -1,0 +1,106 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+plugins {
+    id "com.jfrog.artifactory" version "4.7.5"
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+group = "net.voxelindustry"
+compileJava.options.encoding = 'UTF-8'
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+apply plugin: "maven-publish"
+apply plugin: "com.jfrog.artifactory"
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+    publish {
+        repository {
+            repoKey = 'voxelindustry'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+        defaults {
+            publications ('mavenJava')
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+repositories {
+    maven { url 'http://maven.ferenyr.info/artifactory/libs-release'}
+    mavenCentral()
+}
+
+jar {
+    duplicatesStrategy = 'exclude'
+    exclude('net/voxelindustry/brokkgui/demo/**')
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifactId archivesBaseName
+            artifact source: sourcesJar, classifier: 'sources', extension: 'jar'
+        }
+    }
+}
+
+artifactoryPublish.dependsOn build
+
+minecraft {
+    version = "1.12.2-14.23.5.2814"
+    runDir = "run"
+    mappings = "stable_39"
+}
+
+archivesBaseName = "brokkgui-binding-mc1.12"
+version = project.brokkgui_version
+
+dependencies {
+    api "net.voxelindustry:brokkgui-common:${project.brokkgui_version}"
+    api "net.voxelindustry:brokkgui-elements:${project.brokkgui_version}"
+}
+
+processResources
+{
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
