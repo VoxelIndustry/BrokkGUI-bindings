@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 import net.voxelindustry.brokkgui.GuiFocusManager;
 import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
+import net.voxelindustry.brokkgui.gui.IGuiWindow;
 import net.voxelindustry.brokkgui.internal.IBrokkGuiImpl;
 import net.voxelindustry.brokkgui.internal.IGuiRenderer;
 import net.voxelindustry.brokkgui.paint.RenderPass;
@@ -18,10 +19,10 @@ import java.io.IOException;
 
 public class GuiScreenImpl extends GuiScreen implements IBrokkGuiImpl
 {
-    private final BrokkGuiScreen brokkgui;
-    private final String         modID;
-
+    private final String      modID;
     private final GuiRenderer renderer;
+
+    private IGuiWindow brokkgui;
 
     GuiScreenImpl(String modID, BrokkGuiScreen brokkgui)
     {
@@ -42,8 +43,8 @@ public class GuiScreenImpl extends GuiScreen implements IBrokkGuiImpl
     {
         super.initGui();
 
-        this.brokkgui.getScreenWidthProperty().setValue(this.width);
-        this.brokkgui.getScreenHeightProperty().setValue(this.height);
+        this.brokkgui.setScreenWidth(this.width);
+        this.brokkgui.setScreenHeight(this.height);
 
         Keyboard.enableRepeatEvents(true);
         this.brokkgui.initGui();
@@ -159,19 +160,29 @@ public class GuiScreenImpl extends GuiScreen implements IBrokkGuiImpl
     }
 
     @Override
-    public float getGuiRelativePosX()
+    public float getGuiRelativePosX(float guiXRelativePos, float guiWidth)
     {
-        return (int) (this.width / (1 / brokkgui.getxRelativePos()) - brokkgui.getWidth() / 2);
+        return (int) (this.width / (1 / guiXRelativePos) - guiWidth / 2);
     }
 
     @Override
-    public float getGuiRelativePosY()
+    public float getGuiRelativePosY(float guiYRelativePos, float guiHeight)
     {
-        return (int) (this.height / (1 / brokkgui.getyRelativePos()) - brokkgui.getHeight() / 2);
+        return (int) (this.height / (1 / guiYRelativePos) - guiHeight / 2);
     }
 
-    public BrokkGuiScreen getGui()
+    @Override
+    public IGuiWindow getGui()
     {
         return brokkgui;
+    }
+
+    @Override
+    public void setGuiWindow(IGuiWindow window)
+    {
+        this.brokkgui = window;
+
+        this.brokkgui.setScreenWidth(this.width);
+        this.brokkgui.setScreenHeight(this.height);
     }
 }

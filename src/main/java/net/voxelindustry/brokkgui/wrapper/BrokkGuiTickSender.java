@@ -11,6 +11,7 @@ import java.util.List;
 public class BrokkGuiTickSender implements ITickSender
 {
     private List<ITicking> tickings = new ArrayList<>();
+    private List<ITicking> toAdd    = new ArrayList<>();
     private List<ITicking> toEvict  = new ArrayList<>();
 
     @SubscribeEvent
@@ -26,6 +27,11 @@ public class BrokkGuiTickSender implements ITickSender
             tickings.removeAll(toEvict);
             toEvict.clear();
         }
+        if (!toAdd.isEmpty())
+        {
+            tickings.addAll(toAdd);
+            toAdd.clear();
+        }
         for (ITicking ticking : tickings)
             ticking.tick(millis);
     }
@@ -33,7 +39,7 @@ public class BrokkGuiTickSender implements ITickSender
     @Override
     public void addTicking(ITicking toTick)
     {
-        this.tickings.add(toTick);
+        this.toAdd.add(toTick);
     }
 
     @Override

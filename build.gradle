@@ -86,8 +86,7 @@ archivesBaseName = "brokkgui-binding-mc1.12"
 version = project.brokkgui_version
 
 dependencies {
-    api "net.voxelindustry:brokkgui-common:${project.brokkgui_version}"
-    api "net.voxelindustry:brokkgui-elements:${project.brokkgui_version}"
+    api "net.voxelindustry:brokkgui-core:${project.brokkgui_version}"
 }
 
 processResources

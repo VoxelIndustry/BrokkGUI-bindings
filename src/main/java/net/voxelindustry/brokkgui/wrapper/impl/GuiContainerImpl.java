@@ -9,6 +9,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 import net.voxelindustry.brokkgui.GuiFocusManager;
+import net.voxelindustry.brokkgui.gui.IGuiWindow;
 import net.voxelindustry.brokkgui.internal.IBrokkGuiImpl;
 import net.voxelindustry.brokkgui.internal.IGuiRenderer;
 import net.voxelindustry.brokkgui.paint.RenderPass;
@@ -16,6 +17,7 @@ import net.voxelindustry.brokkgui.paint.RenderTarget;
 import net.voxelindustry.brokkgui.wrapper.GuiHelper;
 import net.voxelindustry.brokkgui.wrapper.GuiRenderer;
 import net.voxelindustry.brokkgui.wrapper.container.BrokkGuiContainer;
+import net.voxelindustry.brokkgui.wrapper.event.SlotEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -23,8 +25,8 @@ import java.io.IOException;
 
 public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
 {
-    private final BrokkGuiContainer<? extends Container> brokkgui;
-    private       String                                 modID;
+    private IGuiWindow brokkgui;
+    private String     modID;
 
     private final GuiRenderer renderer;
 
@@ -76,7 +78,7 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        if (brokkgui.allowContainerHover(mouseX, mouseY))
+        if (!brokkgui.doesOccludePoint(mouseX, mouseY))
             this.renderHoveredToolTip(mouseX, mouseY);
     }
 
@@ -182,15 +184,27 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
     }
 
     @Override
-    public float getGuiRelativePosX()
+    public float getGuiRelativePosX(float guiXRelativePos, float guiWidth)
     {
-        return (int) (this.width / (1 / brokkgui.getxRelativePos()) - brokkgui.getWidth() / 2);
+        return (int) (this.width / (1 / guiXRelativePos) - guiWidth / 2);
     }
 
     @Override
-    public float getGuiRelativePosY()
+    public float getGuiRelativePosY(float guiYRelativePos, float guiHeight)
     {
-        return (int) (this.height / (1 / brokkgui.getyRelativePos()) - brokkgui.getHeight() / 2);
+        return (int) (this.height / (1 / guiYRelativePos) - guiHeight / 2);
+    }
+
+    @Override
+    public IGuiWindow getGui()
+    {
+        return this.brokkgui;
+    }
+
+    @Override
+    public void setGuiWindow(IGuiWindow window)
+    {
+        this.brokkgui = window;
     }
 
     @Override
@@ -199,6 +213,6 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
         super.handleMouseClick(slot, slotID, button, flag);
 
         if (slot != null)
-            this.brokkgui.slotClick(slot, button);
+            this.brokkgui.dispatchEvent(SlotEvent.CLICK, new SlotEvent.Click(null, slot, button));
     }
 }
