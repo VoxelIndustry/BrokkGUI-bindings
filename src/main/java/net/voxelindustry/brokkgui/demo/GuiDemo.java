@@ -43,8 +43,9 @@ public class GuiDemo extends BrokkGuiScreen
         tabPane.addTab(new GuiTab("RadioButton", new RadioButtonDemo()));
         tabPane.addTab(new GuiTab("Labels", new LabelDemo()));
         tabPane.addTab(new GuiTab("Scroll", new ScrollDemo()));
+        tabPane.addTab(new GuiTab("Borders", new BorderDemo()));
 
-        tabPane.setDefaultTab(5);
+        tabPane.setDefaultTab(6);
 
         pane.addChild(tabPane);
 
