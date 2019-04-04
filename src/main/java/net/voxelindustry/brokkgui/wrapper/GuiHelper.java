@@ -16,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.voxelindustry.brokkgui.data.RectCorner;
 import net.voxelindustry.brokkgui.data.Vector2i;
 import net.voxelindustry.brokkgui.internal.EGuiRenderMode;
 import net.voxelindustry.brokkgui.internal.IGuiHelper;
@@ -275,6 +276,53 @@ public class GuiHelper implements IGuiHelper
         GlStateManager.resetColor();
         GlStateManager.enableTexture2D();
         this.disableAlpha();
+    }
+
+    @Override
+    public void drawColoredArc(IGuiRenderer renderer, float centerX, float centerY, float radius, float zLevel,
+                               Color color, RectCorner corner)
+    {
+        float x = radius, y = 0;
+        float P = 1 - radius;
+
+        while (x > y)
+        {
+            y++;
+            if (P <= 0)
+                P = P + 2 * y + 1;
+            else
+            {
+                x--;
+                P = P + 2 * y - 2 * x + 1;
+            }
+
+            if (x < y)
+                break;
+
+            switch (corner)
+            {
+                case TOP_LEFT:
+                    this.drawColoredRect(renderer, -x + centerX, -y + centerY, 1, 1, zLevel, color);
+                    if (x != y)
+                        this.drawColoredRect(renderer, -y + centerX, -x + centerY, 1, 1, zLevel, color);
+                    break;
+                case TOP_RIGHT:
+                    this.drawColoredRect(renderer, x + centerX, -y + centerY, 1, 1, zLevel, color);
+                    if (x != y)
+                        this.drawColoredRect(renderer, y + centerX, -x + centerY, 1, 1, zLevel, color);
+                    break;
+                case BOTTOM_LEFT:
+                    this.drawColoredRect(renderer, -x + centerX, y + centerY, 1, 1, zLevel, color);
+                    if (x != y)
+                        this.drawColoredRect(renderer, -y + centerX, x + centerY, 1, 1, zLevel, color);
+                    break;
+                case BOTTOM_RIGHT:
+                    this.drawColoredRect(renderer, x + centerX, y + centerY, 1, 1, zLevel, color);
+                    if (x != y)
+                        this.drawColoredRect(renderer, y + centerX, x + centerY, 1, 1, zLevel, color);
+                    break;
+            }
+        }
     }
 
     public void drawItemStack(IGuiRenderer renderer, float startX, float startY,

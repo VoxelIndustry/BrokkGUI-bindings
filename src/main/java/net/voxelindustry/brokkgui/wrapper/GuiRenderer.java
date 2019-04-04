@@ -111,7 +111,7 @@ public class GuiRenderer implements IGuiRenderer
                 return GL11.GL_POINTS;
             case TRIANGLES:
                 return GL11.GL_TRIANGLES;
-            case TRIANGLES_STRIP:
+            case TRIANGLE_STRIP:
                 return GL11.GL_TRIANGLE_STRIP;
             default:
                 return GL11.GL_QUADS;
