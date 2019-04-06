@@ -1,6 +1,5 @@
 package net.voxelindustry.brokkgui.wrapper.elements;
 
-import fr.ourten.teabeans.value.BaseListProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -11,6 +10,7 @@ import net.voxelindustry.brokkgui.paint.RenderPass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MCTooltip extends GuiNode
 {
@@ -21,7 +21,8 @@ public class MCTooltip extends GuiNode
 
     public static final class Builder
     {
-        private List<String> lines;
+        private List<String>           lines;
+        private Consumer<List<String>> linesFiller;
 
         public Builder()
         {
@@ -34,37 +35,48 @@ public class MCTooltip extends GuiNode
             return this;
         }
 
+        public Builder dynamicLines(Consumer<List<String>> linesFiller)
+        {
+            this.linesFiller = linesFiller;
+            return this;
+        }
+
         public GuiTooltip create()
         {
-            GuiTooltip tooltip = new GuiTooltip(get());
-            tooltip.setxTranslate(0);
-            tooltip.setyTranslate(0);
-            
-            return tooltip;
+            return new GuiTooltip(get());
         }
 
         public MCTooltip get()
         {
-            return new MCTooltip(lines);
+            return new MCTooltip(linesFiller, lines);
         }
     }
 
-    private BaseListProperty<String> lines;
+    private Consumer<List<String>> linesFiller;
+    private List<String>           linesList;
 
-    public MCTooltip(List<String> lines)
+    public MCTooltip(Consumer<List<String>> linesFiller, List<String> linesList)
     {
         super("mctooltip");
 
-        this.lines = new BaseListProperty<>(lines, "linesProperty");
+        this.linesList = linesList;
+        this.linesFiller = linesFiller;
     }
 
     @Override
     protected void renderContent(IGuiRenderer renderer, RenderPass pass, int mouseX, int mouseY)
     {
         GlStateManager.pushAttrib();
-        GuiUtils.drawHoveringText(lines.getValue(), (int) this.getxPos(), (int) this.getyPos(),
+
+        if (linesFiller != null)
+        {
+            linesList.clear();
+            linesFiller.accept(linesList);
+        }
+        GuiUtils.drawHoveringText(linesList, (int) this.getxPos(), (int) this.getyPos(),
                 Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight,
                 Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().fontRenderer);
+
         GlStateManager.popAttrib();
     }
 }
