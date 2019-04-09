@@ -10,29 +10,29 @@ import net.voxelindustry.brokkgui.wrapper.GuiHelper;
  */
 public class ItemStackViewSkin extends GuiBehaviorSkinBase<ItemStackView, ItemStackViewBehavior>
 {
-    public ItemStackViewSkin(final ItemStackView model, final ItemStackViewBehavior behavior)
+    public ItemStackViewSkin(ItemStackView model, ItemStackViewBehavior behavior)
     {
         super(model, behavior);
     }
 
     @Override
-    public void render(final RenderPass pass, final IGuiRenderer renderer, final int mouseX, final int mouseY)
+    public void render(RenderPass pass, IGuiRenderer renderer, int mouseX, int mouseY)
     {
         super.render(pass, renderer, mouseX, mouseY);
+
         if (pass == GuiHelper.ITEM_MAIN)
         {
             ((GuiHelper) renderer.getHelper()).drawItemStack(renderer,
-                    this.getModel().getxPos() + this.getModel().getxTranslate() + this.getModel().getWidth() / 2,
-                    this.getModel().getyPos() + this.getModel().getyTranslate() + this.getModel().getHeight() / 2,
-                    this.getModel().getWidth(), this.getModel().getHeight(), this.getModel().getzLevel(),
-                    this.getModel().getItemStack(), this.getModel().getAlternateString(), this.getModel().getColor());
+                    getModel().getLeftPos() + getModel().getWidth() / 2,
+                    getModel().getTopPos() + getModel().getHeight() / 2,
+                    getModel().getWidth(), getModel().getHeight(), getModel().getzLevel(),
+                    getModel().getItemStack(), getModel().getAlternateString(), getModel().getColor());
         }
         else if (pass == GuiHelper.ITEM_HOVER)
         {
-            if (this.getModel().isHovered() && this.getModel().hasItemTooltip() &&
-                    !this.getModel().getItemStack().isEmpty())
+            if (getModel().isHovered() && getModel().hasItemTooltip() && !getModel().getItemStack().isEmpty())
                 ((GuiHelper) renderer.getHelper()).drawItemStackTooltip(renderer, mouseX, mouseY,
-                        this.getModel().getItemStack());
+                        getModel().getItemStack(), getModel().getStackTooltipModifier());
         }
     }
 }

@@ -6,11 +6,14 @@ import net.voxelindustry.brokkgui.control.GuiElement;
 import net.voxelindustry.brokkgui.paint.Color;
 import net.voxelindustry.brokkgui.skin.GuiSkinBase;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 /**
  * @author Ourten 29 oct. 2016
- *
- *         A custom node used only for itemstack display. It cannot be used as a
- *         replacement of a slot.
+ * <p>
+ * A custom node used only for itemstack display. It cannot be used as a
+ * replacement of a slot.
  */
 public class ItemStackView extends GuiElement
 {
@@ -20,6 +23,8 @@ public class ItemStackView extends GuiElement
     private final BaseProperty<Boolean> itemTooltipProperty;
 
     private final BaseProperty<Color> colorProperty;
+
+    private Consumer<List<String>> stackTooltipModifier;
 
     public ItemStackView(final ItemStack stack)
     {
@@ -73,9 +78,8 @@ public class ItemStackView extends GuiElement
     }
 
     /**
-     * @param alternateString
-     *            a string to be displayed in place of the usual itemstack quantity
-     *            number at the down-right corner.
+     * @param alternateString a string to be displayed in place of the usual itemstack quantity
+     *                        number at the down-right corner.
      */
     public void setAlternateString(final String alternateString)
     {
@@ -100,6 +104,16 @@ public class ItemStackView extends GuiElement
     public void setColor(Color color)
     {
         this.getColorProperty().setValue(color);
+    }
+
+    public Consumer<List<String>> getStackTooltipModifier()
+    {
+        return this.stackTooltipModifier;
+    }
+
+    public void setStackTooltipModifier(Consumer<List<String>> stackTooltipModifier)
+    {
+        this.stackTooltipModifier = stackTooltipModifier;
     }
 
     @Override

@@ -27,6 +27,7 @@ import net.voxelindustry.brokkgui.paint.Texture;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class GuiHelper implements IGuiHelper
 {
@@ -368,8 +369,13 @@ public class GuiHelper implements IGuiHelper
         }
     }
 
-    public void drawItemStackTooltip(IGuiRenderer renderer, int mouseX, int mouseY,
-                                     ItemStack stack)
+    public void drawItemStackTooltip(IGuiRenderer renderer, int mouseX, int mouseY, ItemStack stack)
+    {
+        this.drawItemStackTooltip(renderer, mouseX, mouseY, stack, null);
+    }
+
+    public void drawItemStackTooltip(IGuiRenderer renderer, int mouseX, int mouseY, ItemStack stack,
+                                     Consumer<List<String>> tooltipModifier)
     {
         List<String> list = stack.getTooltip(this.mc.player, this.mc.gameSettings.advancedItemTooltips ?
                 ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
@@ -381,6 +387,10 @@ public class GuiHelper implements IGuiHelper
             else
                 list.set(i, TextFormatting.GRAY + list.get(i));
         }
+
+        if (tooltipModifier != null)
+            tooltipModifier.accept(list);
+        
         GuiUtils.drawHoveringText(stack, list, mouseX, mouseY, this.mc.displayWidth, this.mc.displayHeight,
                 this.mc.displayWidth, this.mc.fontRenderer);
     }
