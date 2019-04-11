@@ -1,7 +1,7 @@
 package net.voxelindustry.brokkgui.demo;
 
 import net.voxelindustry.brokkgui.data.RectAlignment;
-import net.voxelindustry.brokkgui.data.RectOffset;
+import net.voxelindustry.brokkgui.data.RectBox;
 import net.voxelindustry.brokkgui.demo.category.*;
 import net.voxelindustry.brokkgui.element.GuiLabel;
 import net.voxelindustry.brokkgui.element.ToastManager;
@@ -58,7 +58,7 @@ public class GuiDemo extends BrokkGuiScreen
 
         GuiLabel label = new GuiLabel("Toast");
         label.addStyleClass("toast-label");
-        label.setTextPadding(new RectOffset(2, 0, 2, 0));
+        label.setTextPadding(new RectBox(2, 0, 2, 0));
         label.setWidth(150);
         label.setHeight(20);
         toastManager.addToast(label, 5_000L);

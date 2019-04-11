@@ -7,12 +7,21 @@ public class BorderDemo extends GuiRelativePane
 {
     public BorderDemo()
     {
-        Rectangle rounded1 = new Rectangle();
-        rounded1.setID("rounded1");
-        rounded1.setSize(20, 20);
-        rounded1.setScale(3);
-        rounded1.setStyle("border-width: 2 4 2 4; border-radius: 2; border-color: green; background-color: red;");
+        Rectangle roundedBorder = new Rectangle();
+        roundedBorder.setID("round-border");
+        roundedBorder.setSize(20, 20);
+        roundedBorder.setScale(2);
+        roundedBorder.setStyle("border-width: 2 4 2 4; border-radius: 2; border-color: green; background-color: red;");
 
-        this.addChild(rounded1);
+        this.addChild(roundedBorder, 0.25f, 0.5f);
+
+        Rectangle imageBorder = new Rectangle();
+        imageBorder.setID("image-border");
+        imageBorder.setSize(20, 20);
+        imageBorder.setScale(2);
+        imageBorder.setStyle("border-image-source: url(\"brokkguidemo:textures/gui/image_border.png\"); " +
+                "border-width: 4; border-image-slice: 40%; border-image-outset: 4; border-image-fill: true; background-color: red;");
+
+        this.addChild(imageBorder, 0.75f, 0.5f);
     }
 }
