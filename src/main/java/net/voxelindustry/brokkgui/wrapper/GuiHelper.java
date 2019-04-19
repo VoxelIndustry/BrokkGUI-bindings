@@ -197,7 +197,7 @@ public class GuiHelper implements IGuiHelper
             this.disableAlpha();
         }
         if (thin > 1)
-            this.drawColoredEmptyCircle(renderer, startX + 1, startY + 1, radius - 1, zLevel, color, thin - 1);
+            this.drawColoredEmptyCircle(renderer, startX, startY, radius - 1, zLevel, color, thin - 1);
     }
 
     @Override
