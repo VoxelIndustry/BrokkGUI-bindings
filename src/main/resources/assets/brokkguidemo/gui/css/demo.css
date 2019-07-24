@@ -5,6 +5,12 @@
     border-image-fill: true;
 }
 
+.category-button {
+    background-color: #A1A1A1;
+    border-color: #141414;
+    border-width: 1;
+}
+
 listcell > button:hover {
     background-color: #FFCDD2;
     border-color: #F0F4C3;

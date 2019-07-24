@@ -55,6 +55,7 @@ public class GuiDemo extends BrokkGuiScreen
         for (Map.Entry<String, DemoCategory> categoryEntry : categoryMap.entrySet())
         {
             Button categoryButton = new Button(categoryEntry.getKey());
+            categoryButton.style().styleClass().add("category-button");
             categoryButton.size(100, 30);
             categoryButton.onActionEvent(e ->
             {
