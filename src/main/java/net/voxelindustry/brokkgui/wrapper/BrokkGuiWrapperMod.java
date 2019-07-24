@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
+import net.voxelindustry.brokkgui.style.adapter.StyleEngine;
 
 /**
  * @author Ourten 5 oct. 2016
@@ -19,17 +20,18 @@ public class BrokkGuiWrapperMod
     @EventHandler
     public void onPreInit(final FMLPreInitializationEvent event)
     {
-        BrokkGuiPlatform.getInstance().setPlatformName("MC1.12.2");
-        BrokkGuiPlatform.getInstance().setKeyboardUtil(new KeyboardUtil());
-        BrokkGuiPlatform.getInstance().setMouseUtil(new MouseUtil());
+        BrokkGuiPlatform.instance().platformName("MC1.12.2");
+        BrokkGuiPlatform.instance().keyboardUtil(new KeyboardUtil());
+        BrokkGuiPlatform.instance().mouseUtil(new MouseUtil());
+        StyleEngine.getInstance().start();
 
         if (event.getSide().isClient())
         {
-            BrokkGuiPlatform.getInstance().setGuiHelper(new GuiHelper());
+            BrokkGuiPlatform.instance().guiHelper(new GuiHelper());
 
             BrokkGuiTickSender tickSender = new BrokkGuiTickSender();
             MinecraftForge.EVENT_BUS.register(tickSender);
-            BrokkGuiPlatform.getInstance().setTickSender(tickSender);
+            BrokkGuiPlatform.instance().tickSender(tickSender);
         }
     }
 }

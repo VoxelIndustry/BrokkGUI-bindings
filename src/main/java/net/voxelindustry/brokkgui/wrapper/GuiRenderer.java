@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
-import net.voxelindustry.brokkgui.internal.EGuiRenderMode;
+import net.voxelindustry.brokkgui.internal.GuiRenderMode;
 import net.voxelindustry.brokkgui.internal.IGuiHelper;
 import net.voxelindustry.brokkgui.internal.IGuiRenderer;
 import net.voxelindustry.brokkgui.paint.RenderPass;
@@ -18,11 +18,11 @@ public class GuiRenderer implements IGuiRenderer
     public GuiRenderer(final Tessellator t)
     {
         this.t = t;
-        this.helper = (GuiHelper) BrokkGuiPlatform.getInstance().getGuiHelper();
+        this.helper = (GuiHelper) BrokkGuiPlatform.instance().guiHelper();
     }
 
     @Override
-    public void beginDrawing(final EGuiRenderMode mode, final boolean texture)
+    public void beginDrawing(final GuiRenderMode mode, final boolean texture)
     {
         final int op = this.getGLOpFromMode(mode);
         if (texture)
@@ -97,7 +97,7 @@ public class GuiRenderer implements IGuiRenderer
 
     }
 
-    private int getGLOpFromMode(final EGuiRenderMode mode)
+    private int getGLOpFromMode(final GuiRenderMode mode)
     {
         switch (mode)
         {

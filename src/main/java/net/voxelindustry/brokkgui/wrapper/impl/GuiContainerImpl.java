@@ -38,13 +38,13 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
         this.renderer = new GuiRenderer(Tessellator.getInstance());
         this.brokkgui.setWrapper(this);
 
-        brokkGui.getWidthProperty().addListener((obs, oldValue, newValue) ->
+        brokkGui.widthProperty().addListener((obs, oldValue, newValue) ->
                 refreshContainerWidth(newValue.intValue()));
-        brokkGui.getHeightProperty().addListener((obs, oldValue, newValue) ->
+        brokkGui.heightProperty().addListener((obs, oldValue, newValue) ->
                 refreshContainerHeight(newValue.intValue()));
 
-        refreshContainerWidth((int) brokkGui.getWidth());
-        refreshContainerHeight((int) brokkGui.getHeight());
+        refreshContainerWidth((int) brokkGui.width());
+        refreshContainerHeight((int) brokkGui.height());
     }
 
     private void refreshContainerWidth(int newWidth)
@@ -66,8 +66,8 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
     {
         super.initGui();
 
-        this.brokkgui.getScreenWidthProperty().setValue(this.width);
-        this.brokkgui.getScreenHeightProperty().setValue(this.height);
+        this.brokkgui.screenWidthProperty().setValue(this.width);
+        this.brokkgui.screenHeightProperty().setValue(this.height);
 
         Keyboard.enableRepeatEvents(true);
         this.brokkgui.initGui();
@@ -145,8 +145,8 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
     @Override
     public void keyTyped(final char c, final int key) throws IOException
     {
-        if (key == BrokkGuiPlatform.getInstance().getKeyboardUtil().getKeyCode("ESCAPE") ||
-                GuiFocusManager.getInstance().getFocusedNode() == null)
+        if (key == BrokkGuiPlatform.instance().keyboardUtil().getKeyCode("ESCAPE") ||
+                GuiFocusManager.instance().focusedNode() == null)
             super.keyTyped(c, key);
         this.brokkgui.onKeyTyped(c, key);
         this.brokkgui.onKeyPressed(key);

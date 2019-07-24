@@ -1,6 +1,8 @@
-mainpane {
-    border-color: aqua;
-    border-width: 1;
+#mainpane {
+    border-width: 4;
+    border-image-source: url("brokkguidemo:textures/gui/background_generic.png");
+    border-image-slice: 40%;
+    border-image-fill: true;
 }
 
 listcell > button:hover {

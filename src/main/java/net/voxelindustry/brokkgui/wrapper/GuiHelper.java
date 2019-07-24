@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.voxelindustry.brokkgui.data.RectCorner;
 import net.voxelindustry.brokkgui.data.Vector2i;
-import net.voxelindustry.brokkgui.internal.EGuiRenderMode;
+import net.voxelindustry.brokkgui.internal.GuiRenderMode;
 import net.voxelindustry.brokkgui.internal.IGuiHelper;
 import net.voxelindustry.brokkgui.internal.IGuiRenderer;
 import net.voxelindustry.brokkgui.paint.Color;
@@ -168,7 +168,7 @@ public class GuiHelper implements IGuiHelper
             GlStateManager.disableTexture2D();
             GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), (float) (color.getAlpha() *
                     alphaMask));
-            renderer.beginDrawing(EGuiRenderMode.POINTS, false);
+            renderer.beginDrawing(GuiRenderMode.POINTS, false);
             while (x >= y)
             {
                 renderer.addVertex(startX + x, startY + y, zLevel);
@@ -207,7 +207,7 @@ public class GuiHelper implements IGuiHelper
         GlStateManager.disableTexture2D();
         this.enableAlpha();
         GlStateManager.color(c.getRed(), c.getGreen(), c.getBlue(), (float) (c.getAlpha() * alphaMask));
-        renderer.beginDrawing(EGuiRenderMode.POINTS, false);
+        renderer.beginDrawing(GuiRenderMode.POINTS, false);
         float r2 = radius * radius;
         float area = r2 * 4;
         float rr = radius * 2;
@@ -233,7 +233,7 @@ public class GuiHelper implements IGuiHelper
     {
         this.enableAlpha();
         GlStateManager.color(1, 1, 1, (float) alphaMask);
-        renderer.beginDrawing(EGuiRenderMode.POINTS, true);
+        renderer.beginDrawing(GuiRenderMode.POINTS, true);
         float r2 = radius * radius;
         float area = r2 * 4;
         float rr = radius * 2;
@@ -267,7 +267,7 @@ public class GuiHelper implements IGuiHelper
         this.enableAlpha();
         GlStateManager.color(c.getRed(), c.getGreen(), c.getBlue(), (float) (c.getAlpha() * alphaMask));
 
-        renderer.beginDrawing(EGuiRenderMode.LINES, false);
+        renderer.beginDrawing(GuiRenderMode.LINES, false);
         GL11.glLineWidth(lineWeight);
 
         renderer.addVertex(startX, startY, zLevel);
@@ -324,6 +324,25 @@ public class GuiHelper implements IGuiHelper
                     break;
             }
         }
+    }
+
+    @Override
+    public void drawColoredCross(IGuiRenderer renderer, float centerX, float centerY, float radius, float width, float zLevel, Color color)
+    {
+        // Left Arm
+        this.drawColoredRect(renderer, centerX - radius, centerY - width / 2, radius - width / 2, width, zLevel, color);
+
+        // Right Arm
+        this.drawColoredRect(renderer, centerX + width / 2, centerY - width / 2, radius - width / 2, width, zLevel, color);
+
+        // Upper Arm
+        this.drawColoredRect(renderer, centerX - width / 2, centerY - radius, width, radius - width / 2, zLevel, color);
+
+        // Bottom Arm
+        this.drawColoredRect(renderer, centerX - width / 2, centerY + width / 2, width, radius - width / 2, zLevel, color);
+
+        // Center
+        this.drawColoredRect(renderer, centerX - width / 2, centerY - width / 2, width, width, zLevel, color);
     }
 
     public void drawItemStack(IGuiRenderer renderer, float startX, float startY,
@@ -390,7 +409,7 @@ public class GuiHelper implements IGuiHelper
 
         if (tooltipModifier != null)
             tooltipModifier.accept(list);
-        
+
         GuiUtils.drawHoveringText(stack, list, mouseX, mouseY, this.mc.displayWidth, this.mc.displayHeight,
                 this.mc.displayWidth, this.mc.fontRenderer);
     }

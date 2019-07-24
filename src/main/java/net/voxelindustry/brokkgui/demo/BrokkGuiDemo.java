@@ -35,7 +35,7 @@ public class BrokkGuiDemo
     {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new DemoGuiHandler());
         MinecraftForge.EVENT_BUS.register(this);
-        BrokkGuiPlatform.getInstance().enableRenderDebug(true);
+        BrokkGuiPlatform.instance().enableRenderDebug(true);
     }
 
     @SubscribeEvent

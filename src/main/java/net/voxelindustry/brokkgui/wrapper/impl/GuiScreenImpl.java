@@ -43,8 +43,8 @@ public class GuiScreenImpl extends GuiScreen implements IBrokkGuiImpl
     {
         super.initGui();
 
-        this.brokkgui.setScreenWidth(this.width);
-        this.brokkgui.setScreenHeight(this.height);
+        this.brokkgui.screenWidth(this.width);
+        this.brokkgui.screenHeight(this.height);
 
         Keyboard.enableRepeatEvents(true);
         this.brokkgui.initGui();
@@ -123,8 +123,8 @@ public class GuiScreenImpl extends GuiScreen implements IBrokkGuiImpl
     @Override
     public void keyTyped(final char c, final int key) throws IOException
     {
-        if (key == BrokkGuiPlatform.getInstance().getKeyboardUtil().getKeyCode("ESCAPE") ||
-                GuiFocusManager.getInstance().getFocusedNode() == null)
+        if (key == BrokkGuiPlatform.instance().keyboardUtil().getKeyCode("ESCAPE") ||
+                GuiFocusManager.instance().focusedNode() == null)
             super.keyTyped(c, key);
         this.brokkgui.onKeyTyped(c, key);
         this.brokkgui.onKeyPressed(key);
@@ -182,7 +182,7 @@ public class GuiScreenImpl extends GuiScreen implements IBrokkGuiImpl
     {
         this.brokkgui = window;
 
-        this.brokkgui.setScreenWidth(this.width);
-        this.brokkgui.setScreenHeight(this.height);
+        this.brokkgui.screenWidth(this.width);
+        this.brokkgui.screenHeight(this.height);
     }
 }
