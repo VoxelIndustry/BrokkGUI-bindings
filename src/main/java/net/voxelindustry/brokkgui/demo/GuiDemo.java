@@ -36,7 +36,7 @@ public class GuiDemo extends BrokkGuiScreen
         Label title = new Label();
 
         Button backButton = new Button("BACK");
-        backButton.style().parseInlineCSS("border-color: #373737; border-width: 1; border-radius: 2; background-color: #505050;");
+        backButton.setId("back-button");
         backButton.textPadding(RectBox.ONE);
         backButton.setVisible(false);
 

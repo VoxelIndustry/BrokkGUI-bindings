@@ -11,6 +11,21 @@
     border-width: 1;
 }
 
+#back-button {
+    border-color: #373737;
+    border-width: 1;
+    border-radius: 2;
+    background-color: #505050;
+}
+
+.icon {
+    background-texture: url("brokkguidemo:textures/gui/icon_test.png");
+}
+
+.icon:hover {
+    background-texture: url("brokkguidemo:textures/gui/icon_test_hover.png");
+}
+
 listcell > button:hover {
     background-color: #FFCDD2;
     border-color: #F0F4C3;
