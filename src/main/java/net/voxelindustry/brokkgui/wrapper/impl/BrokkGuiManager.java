@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
+import net.voxelindustry.brokkgui.gui.IGuiWindow;
 import net.voxelindustry.brokkgui.style.StylesheetManager;
 import net.voxelindustry.brokkgui.wrapper.container.BrokkGuiContainer;
 
@@ -13,12 +14,12 @@ import net.voxelindustry.brokkgui.wrapper.container.BrokkGuiContainer;
  */
 public class BrokkGuiManager
 {
-    public static GuiScreen getBrokkGuiScreen(BrokkGuiScreen brokkGui)
+    public static GuiScreen getBrokkGuiScreen(IGuiWindow brokkGui)
     {
         return getBrokkGuiScreen(StylesheetManager.getInstance().DEFAULT_THEME, brokkGui);
     }
 
-    public static GuiScreen getBrokkGuiScreen(String modID, BrokkGuiScreen brokkGui)
+    public static GuiScreen getBrokkGuiScreen(String modID, IGuiWindow brokkGui)
     {
         return new GuiScreenImpl(modID, brokkGui);
     }

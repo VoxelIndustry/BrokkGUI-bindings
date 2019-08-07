@@ -24,7 +24,7 @@ public class GuiScreenImpl extends GuiScreen implements IBrokkGuiImpl
 
     private IGuiWindow brokkgui;
 
-    GuiScreenImpl(String modID, BrokkGuiScreen brokkgui)
+    GuiScreenImpl(String modID, IGuiWindow brokkgui)
     {
         this.brokkgui = brokkgui;
         this.modID = modID;
