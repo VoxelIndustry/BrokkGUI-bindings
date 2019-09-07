@@ -49,15 +49,13 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
 
     private void refreshContainerWidth(int newWidth)
     {
-        this.width = newWidth;
-        this.xSize = width;
+        this.xSize = newWidth;
         this.guiLeft = (this.width - this.xSize) / 2;
     }
 
     private void refreshContainerHeight(int newHeight)
     {
-        this.height = newHeight;
-        this.ySize = height;
+        this.ySize = newHeight;
         this.guiTop = (this.height - this.ySize) / 2;
     }
 
@@ -73,6 +71,7 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
         this.brokkgui.initGui();
     }
 
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
@@ -215,4 +214,6 @@ public class GuiContainerImpl extends GuiContainer implements IBrokkGuiImpl
         if (slot != null)
             this.brokkgui.dispatchEvent(SlotEvent.CLICK, new SlotEvent.Click(null, slot, button));
     }
+
+
 }
