@@ -1,0 +1,21 @@
+modLoader="javafml" #mandatory
+loaderVersion="[28,)" #mandatory (26 is current forge version)
+issueTrackerURL="http://my.issue.tracker/" #optional
+
+[[mods]] #mandatory
+    modId="brokkguiwrapper"
+    namespace="brokkguiwrapper"
+    version="${file.jarVersion}" #mandatory
+    displayName="BrokkGui Wrapper" #mandatory
+    updateJSONURL="http://myurl.me/" #optional
+    displayURL="http://example.com/" #optional
+    logoFile="examplemod.png" #optional
+    credits="Thanks for this example mod goes to Java" #optional
+    authors="Love, Cheese and small house plants" #optional
+    description='''Description'''
+[[dependencies.brokkguiwrapper]]
+    modId="forge"
+    mandatory=true
+    versionRange="[${forge_version},)"
+    ordering="NONE"
+    side="BOTH"

@@ -1,0 +1,7 @@
+includeBuild('../central') {
+    dependencySubstitution {
+        substitute module('net.voxelindustry:brokkgui-core') with project(':core')
+    }
+}
+
+include 'demo'
