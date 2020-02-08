@@ -1,14 +1,14 @@
 package net.voxelindustry.brokkgui.demo.category;
 
-import net.voxelindustry.brokkgui.element.input.GuiToggleGroup;
 import net.voxelindustry.brokkgui.data.RectSide;
 import net.voxelindustry.brokkgui.data.Rotation;
 import net.voxelindustry.brokkgui.element.input.GuiCheckbox;
 import net.voxelindustry.brokkgui.element.input.GuiRadioButton;
+import net.voxelindustry.brokkgui.element.input.GuiToggleGroup;
 import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
 import net.voxelindustry.brokkgui.shape.Rectangle;
 
-public class RadioButtonDemo extends GuiAbsolutePane
+public class RadioButtonDemo extends GuiAbsolutePane implements IDemoCategory
 {
     public RadioButtonDemo()
     {
@@ -38,5 +38,11 @@ public class RadioButtonDemo extends GuiAbsolutePane
         this.addChild(radioButton, 0, 0);
         this.addChild(radioButton2, 0, 15);
         this.addChild(checkbox, 0, 30);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "RadioButton";
     }
 }

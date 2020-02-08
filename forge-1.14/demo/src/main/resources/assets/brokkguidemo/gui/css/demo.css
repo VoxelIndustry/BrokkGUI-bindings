@@ -3,6 +3,16 @@ mainpane {
     border-width: 1;
 }
 
+.demo-category-button {
+    border-color: #7F7F7F;
+    border-width: 1;
+    background-color: #BDBDBD;
+}
+
+.demo-category-button:hover {
+    background-color: #CDCDCD;
+}
+
 listcell > button:hover {
     background-color: #FFCDD2;
     border-color: #F0F4C3;
@@ -74,4 +84,16 @@ scrollpane .grip-x {
 
 #horiscroll-rect {
     background-texture: url("brokkguidemo:textures/gui/horiz_scroll.png");
+}
+
+#animated-rect-demo {
+    background-texture: url("brokkguidemo:textures/gui/sprite_animation.png");
+    background-animation: assets("brokkguidemo:textures/gui/sprite_animation.json");
+}
+
+#animated-repeated-rect-demo {
+    background-texture: url("brokkguidemo:textures/gui/sprite_animation.png", 8px, 8px);
+    background-animation: assets("brokkguidemo:textures/gui/sprite_animation.json");
+    background-repeat: repeat;
+    background-rotation: clockwise 25% counterclockwise 25% upside 25%;
 }

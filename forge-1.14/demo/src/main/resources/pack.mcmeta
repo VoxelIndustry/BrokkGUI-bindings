@@ -1,7 +1,6 @@
 {
     "pack": {
         "description": "BrokkGui Demo Resources",
-        "pack_format": 4,
-        "_comment": "Demo mod for the BrokkGUI framework."
+        "pack_format": 4
     }
 }

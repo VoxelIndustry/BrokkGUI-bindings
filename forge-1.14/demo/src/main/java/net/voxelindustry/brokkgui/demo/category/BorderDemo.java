@@ -3,7 +3,7 @@ package net.voxelindustry.brokkgui.demo.category;
 import net.voxelindustry.brokkgui.panel.GuiRelativePane;
 import net.voxelindustry.brokkgui.shape.Rectangle;
 
-public class BorderDemo extends GuiRelativePane
+public class BorderDemo extends GuiRelativePane implements IDemoCategory
 {
     public BorderDemo()
     {
@@ -23,5 +23,11 @@ public class BorderDemo extends GuiRelativePane
                 "border-width: 4; border-image-slice: 40%; border-image-outset: 4; border-image-fill: true; background-color: red;");
 
         this.addChild(imageBorder, 0.75f, 0.5f);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "Border";
     }
 }

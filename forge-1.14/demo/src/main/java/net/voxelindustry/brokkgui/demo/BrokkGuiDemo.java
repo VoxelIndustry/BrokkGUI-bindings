@@ -5,6 +5,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 import net.voxelindustry.brokkgui.wrapper.impl.BrokkGuiManager;
@@ -84,7 +86,7 @@ public class BrokkGuiDemo
                 if (world.isRemote && !player.isSneaking())
                     Minecraft.getInstance().displayGuiScreen(BrokkGuiManager.getBrokkGuiScreen(new StringTextComponent("demo"), new GuiDemo()));
                 else if (!world.isRemote && player.isSneaking())
-                    player.openContainer(new DummyDemoContainerProvider());
+                  NetworkHooks.openGui((ServerPlayerEntity) player, new DummyDemoContainerProvider());
                 return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
             }
         }.setRegistryName("itembrokkguitest"));

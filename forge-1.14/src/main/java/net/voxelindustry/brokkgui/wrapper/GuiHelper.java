@@ -23,7 +23,8 @@ import net.voxelindustry.brokkgui.internal.IGuiHelper;
 import net.voxelindustry.brokkgui.internal.IGuiRenderer;
 import net.voxelindustry.brokkgui.paint.Color;
 import net.voxelindustry.brokkgui.paint.RenderPass;
-import net.voxelindustry.brokkgui.paint.Texture;
+import net.voxelindustry.brokkgui.sprite.SpriteRotation;
+import net.voxelindustry.brokkgui.sprite.Texture;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -59,17 +60,63 @@ public class GuiHelper implements IGuiHelper
     }
 
     @Override
-    public void scissorBox(float f, float g, float h, float i)
+    public void scissorBox(float xStart, float yStart, float xEnd, float yEnd)
     {
-        int width = (int) (h - f);
-        int height = (int) (i - g);
         double factor = this.mc.mainWindow.getGuiScaleFactor();
+
+        // Needed to prevent pixel bleeding when scissor is active
+        // This must be properly checked after a binding update
+        // TODO : Ensure there are only 1 - 2 - 3 and 4 scaleFactor for MC GUI
+        int topOffset = 0;
+        int bottomOffset = 0;
+
+        int heightRatio = (int) ((double) Minecraft.getInstance().mainWindow.getFramebufferHeight() / factor);
+        boolean doesHeightNeedOffset = (double) Minecraft.getInstance().mainWindow.getFramebufferHeight() / factor > (double) heightRatio;
+
+        if (factor == 4)
+        {
+            topOffset = -4;
+            bottomOffset = 1;
+        }
+        else if (factor == 3)
+        {
+            if (doesHeightNeedOffset)
+            {
+                topOffset = -2;
+                bottomOffset = 1;
+            }
+            else
+            {
+                topOffset = -3;
+                bottomOffset = 3;
+            }
+        }
+        else if (factor == 2)
+        {
+            if (doesHeightNeedOffset)
+            {
+                topOffset = -2;
+                bottomOffset = 1;
+            }
+            else
+            {
+                topOffset = -2;
+                bottomOffset = 2;
+            }
+        }
+        else if (factor == 1)
+        {
+            topOffset = -1;
+            bottomOffset = 1;
+        }
+
+        int width = (int) (xEnd - xStart);
+        int height = (int) (yEnd - yStart);
         Screen currentScreen = this.mc.currentScreen;
         if (currentScreen != null)
         {
-            int bottomY = (int) (currentScreen.height - i);
-            GL11.glScissor((int) (f * factor), (int) (bottomY * factor), (int) (width * factor),
-                    (int) (height * factor));
+            int bottomY = (int) (currentScreen.height - yEnd);
+            GL11.glScissor((int) (xStart * factor), (int) (bottomY * factor) + bottomOffset, (int) (width * factor), (int) (height * factor) + topOffset);
         }
     }
 
@@ -99,6 +146,47 @@ public class GuiHelper implements IGuiHelper
         this.drawString(string, x, y, zLevel, textColor, Color.ALPHA);
     }
 
+
+    @Override
+    public void drawTexturedRect(IGuiRenderer renderer, float xStart, float yStart, float uMin, float vMin,
+                                 float uMax, float vMax, float width, float height, float zLevel, SpriteRotation rotation)
+    {
+        this.enableAlpha();
+        GlStateManager.color4f(1, 1, 1, (float) (1 * this.alphaMask));
+        renderer.beginDrawingQuads(true);
+
+        switch (rotation)
+        {
+            case NONE:
+                renderer.addVertexWithUV(xStart, yStart + height, zLevel, uMin, vMax);
+                renderer.addVertexWithUV(xStart + width, yStart + height, zLevel, uMax, vMax);
+                renderer.addVertexWithUV(xStart + width, yStart, zLevel, uMax, vMin);
+                renderer.addVertexWithUV(xStart, yStart, zLevel, uMin, vMin);
+                break;
+            case CLOCKWISE:
+                renderer.addVertexWithUV(xStart, yStart + height, zLevel, uMax, vMax);
+                renderer.addVertexWithUV(xStart + width, yStart + height, zLevel, uMax, vMin);
+                renderer.addVertexWithUV(xStart + width, yStart, zLevel, uMin, vMin);
+                renderer.addVertexWithUV(xStart, yStart, zLevel, uMin, vMax);
+                break;
+            case UPSIDE:
+                renderer.addVertexWithUV(xStart, yStart + height, zLevel, uMax, vMin);
+                renderer.addVertexWithUV(xStart + width, yStart + height, zLevel, uMin, vMin);
+                renderer.addVertexWithUV(xStart + width, yStart, zLevel, uMin, vMax);
+                renderer.addVertexWithUV(xStart, yStart, zLevel, uMax, vMax);
+                break;
+            case COUNTERCLOCKWISE:
+                renderer.addVertexWithUV(xStart, yStart + height, zLevel, uMin, vMin);
+                renderer.addVertexWithUV(xStart + width, yStart + height, zLevel, uMin, vMax);
+                renderer.addVertexWithUV(xStart + width, yStart, zLevel, uMax, vMax);
+                renderer.addVertexWithUV(xStart, yStart, zLevel, uMax, vMin);
+                break;
+        }
+
+        renderer.endDrawing();
+        this.disableAlpha();
+    }
+
     @Override
     public void drawTexturedRect(IGuiRenderer renderer, float xStart, float yStart, float uMin, float vMin,
                                  float uMax, float vMax, float width, float height, float zLevel)
@@ -110,6 +198,7 @@ public class GuiHelper implements IGuiHelper
         renderer.addVertexWithUV(xStart + width, yStart + height, zLevel, uMax, vMax);
         renderer.addVertexWithUV(xStart + width, yStart, zLevel, uMax, vMin);
         renderer.addVertexWithUV(xStart, yStart, zLevel, uMin, vMin);
+
         renderer.endDrawing();
         this.disableAlpha();
     }

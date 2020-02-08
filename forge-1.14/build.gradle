@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id "com.jfrog.artifactory" version "4.7.5"
+    id "com.jfrog.artifactory" version "4.9.8"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -74,9 +74,25 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact reobfArtifact
 
+            artifactId archivesBaseName
+            artifact reobfArtifact
             artifact source: sourcesJar, classifier: 'sources', extension: 'jar'
+
+            // Allows the maven pom file to be modified.
+            pom.withXml {
+                // Go through all the dependencies.
+                asNode().dependencies.dependency.each { dep ->
+
+                    // Check if the dependency has been mapped with MCP
+                    if (dep.version.last().value().last().contains('_mapped_snapshot_') || dep.version.last().value().last().contains('_mapped_stable_')) {
+
+                        // Remove the MCP mapped artifact from the dependency list.
+                        println 'Surpressing MCP mapped artifact ' + dep.artifactId.last().value().last() + ' from maven dependencies.'
+                        assert dep.parent().remove(dep)
+                    }
+                }
+            }
         }
     }
 }
@@ -135,7 +151,7 @@ version = project.brokkgui_version
 
 dependencies {
     api "net.voxelindustry:brokkgui-core:${project.brokkgui_version}"
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.11'
+    minecraft "net.minecraftforge:forge:${project.forge_version}"
 }
 
 jar {

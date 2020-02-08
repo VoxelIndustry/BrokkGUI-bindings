@@ -36,24 +36,29 @@ public class GuiContainerImpl<T extends Container> extends ContainerScreen<T> im
         this.brokkgui.setWrapper(this);
 
         brokkGui.getWidthProperty().addListener((obs, oldValue, newValue) ->
-                refreshContainerWidth(newValue.intValue()));
+                refreshContainerWidth(newValue.intValue(), (int) brokkGui.getxOffset()));
         brokkGui.getHeightProperty().addListener((obs, oldValue, newValue) ->
-                refreshContainerHeight(newValue.intValue()));
+                refreshContainerHeight(newValue.intValue(), (int) brokkGui.getyOffset()));
 
-        refreshContainerWidth((int) brokkGui.getWidth());
-        refreshContainerHeight((int) brokkGui.getHeight());
+        brokkGui.getxOffsetProperty().addListener((obs, oldValue, newValue) ->
+                refreshContainerWidth((int) brokkGui.getWidth(), newValue.intValue()));
+        brokkGui.getyOffsetProperty().addListener((obs, oldValue, newValue) ->
+                refreshContainerHeight((int) brokkGui.getHeight(), newValue.intValue()));
+
+        refreshContainerWidth((int) brokkGui.getWidth(), (int) brokkGui.getxOffset());
+        refreshContainerHeight((int) brokkGui.getHeight(), (int) brokkGui.getyOffset());
     }
 
-    private void refreshContainerWidth(int newWidth)
+    private void refreshContainerWidth(int width, int offsetX)
     {
-        this.xSize = newWidth;
-        this.guiLeft = (this.width - this.xSize) / 2;
+        this.xSize = width;
+        this.guiLeft = (this.width - this.xSize) / 2 + offsetX;
     }
 
-    private void refreshContainerHeight(int newHeight)
+    private void refreshContainerHeight(int height, int offsetY)
     {
-        this.ySize = newHeight;
-        this.guiTop = (this.height - this.ySize) / 2;
+        this.ySize = height;
+        this.guiTop = (this.height - this.ySize) / 2 + offsetY;
     }
 
     @Override
@@ -80,6 +85,7 @@ public class GuiContainerImpl<T extends Container> extends ContainerScreen<T> im
     @Override
     public void render(int mouseX, int mouseY, float partialTicks)
     {
+        this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
 
         if (!brokkgui.doesOccludePoint(mouseX, mouseY))

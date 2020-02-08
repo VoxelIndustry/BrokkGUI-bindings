@@ -1,20 +1,34 @@
 package net.voxelindustry.brokkgui.demo;
 
+import net.voxelindustry.brokkgui.component.GuiNode;
 import net.voxelindustry.brokkgui.data.RectAlignment;
 import net.voxelindustry.brokkgui.data.RectBox;
-import net.voxelindustry.brokkgui.demo.category.*;
+import net.voxelindustry.brokkgui.demo.category.AnimationDemo;
+import net.voxelindustry.brokkgui.demo.category.BorderDemo;
+import net.voxelindustry.brokkgui.demo.category.IDemoCategory;
+import net.voxelindustry.brokkgui.demo.category.LabelDemo;
+import net.voxelindustry.brokkgui.demo.category.ListViewDemo;
+import net.voxelindustry.brokkgui.demo.category.RadioButtonDemo;
+import net.voxelindustry.brokkgui.demo.category.ScrollDemo;
+import net.voxelindustry.brokkgui.demo.category.SpriteDemo;
+import net.voxelindustry.brokkgui.demo.category.TextFieldDemo;
 import net.voxelindustry.brokkgui.element.GuiLabel;
 import net.voxelindustry.brokkgui.element.ToastManager;
 import net.voxelindustry.brokkgui.element.input.GuiButton;
-import net.voxelindustry.brokkgui.element.pane.GuiTab;
-import net.voxelindustry.brokkgui.element.pane.GuiTabPane;
 import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
-import net.voxelindustry.brokkgui.paint.Texture;
+import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
 import net.voxelindustry.brokkgui.panel.GuiRelativePane;
+import net.voxelindustry.brokkgui.sprite.Texture;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiDemo extends BrokkGuiScreen
 {
     public ToastManager toastManager;
+
+    private List<IDemoCategory> demoPages = new ArrayList<>();
+    private GuiNode             currentCategory;
 
     public GuiDemo()
     {
@@ -22,32 +36,43 @@ public class GuiDemo extends BrokkGuiScreen
 
         this.addStylesheet("/assets/brokkguidemo/gui/css/demo.css");
 
-        final GuiRelativePane pane = new GuiRelativePane();
-        this.setMainPanel(pane);
+        final GuiRelativePane mainPanel = new GuiRelativePane();
+        this.setMainPanel(mainPanel);
 
-        pane.setBackgroundTexture(new Texture("brokkguidemo:textures/gui/background.png"));
-        final GuiButton button = new GuiButton("Test Button");
+        mainPanel.setBackgroundTexture(new Texture("brokkguidemo:textures/gui/background.png"));
 
-        button.setWidth(200);
-        button.setHeight(30);
-        button.setStyle("border-color: green; border-width: 2; text-color: khaki");
+        demoPages.add(new TextFieldDemo());
+        demoPages.add(new ListViewDemo(this));
+        demoPages.add(new AnimationDemo());
+        demoPages.add(new RadioButtonDemo());
+        demoPages.add(new LabelDemo());
+        demoPages.add(new ScrollDemo());
+        demoPages.add(new BorderDemo());
+        demoPages.add(new SpriteDemo());
 
-        button.setOnClickEvent(e -> System.out.println("clicked"));
+        GuiAbsolutePane body = new GuiAbsolutePane();
+        body.setSizeRatio(1, 1);
+        mainPanel.addChild(body);
 
-        final GuiTabPane tabPane = new GuiTabPane();
-        tabPane.setWidth(200);
-        tabPane.setHeight(200);
-        tabPane.addTab(new GuiTab("Textfield", new TextFieldDemo()));
-        tabPane.addTab(new GuiTab("ListView", new ListViewDemo(this)));
-        tabPane.addTab(new GuiTab("Animation", new AnimationDemo()));
-        tabPane.addTab(new GuiTab("RadioButton", new RadioButtonDemo()));
-        tabPane.addTab(new GuiTab("Labels", new LabelDemo()));
-        tabPane.addTab(new GuiTab("Scroll", new ScrollDemo()));
-        tabPane.addTab(new GuiTab("Borders", new BorderDemo()));
+        GuiRelativePane categoryHolder = new GuiRelativePane();
+        categoryHolder.setSizeRatio(1, 1);
+        mainPanel.addChild(categoryHolder);
 
-        tabPane.setDefaultTab(6);
-
-        pane.addChild(tabPane);
+        for (int index = 0; index < demoPages.size(); index++)
+        {
+            GuiButton button = new GuiButton(demoPages.get(index).getName());
+            button.addStyleClass("demo-category-button");
+            button.setSize(55, 20);
+            int finalIndex = index;
+            button.setOnActionEvent(e ->
+            {
+                currentCategory = (GuiNode) demoPages.get(finalIndex);
+                currentCategory.setSize(200, 200);
+                categoryHolder.addChild(currentCategory);
+                body.setVisible(false);
+            });
+            body.addChild(button, 8 + index % 3 * 63, 10 + index / 3 * 25);
+        }
 
         this.getMainPanel().setID("mainpane");
 

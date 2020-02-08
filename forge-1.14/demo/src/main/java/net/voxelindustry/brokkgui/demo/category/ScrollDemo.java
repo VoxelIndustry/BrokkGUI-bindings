@@ -4,7 +4,7 @@ import net.voxelindustry.brokkgui.panel.GuiRelativePane;
 import net.voxelindustry.brokkgui.element.pane.ScrollPane;
 import net.voxelindustry.brokkgui.shape.Rectangle;
 
-public class ScrollDemo extends GuiRelativePane
+public class ScrollDemo extends GuiRelativePane implements IDemoCategory
 {
     public ScrollDemo()
     {
@@ -13,6 +13,9 @@ public class ScrollDemo extends GuiRelativePane
         verticalScroll.setHeightRatio(0.5f);
         verticalScroll.setGripYWidth(12);
         verticalScroll.setGripYHeight(24);
+        verticalScroll.setPannable(true);
+        verticalScroll.setScrollable(false);
+        verticalScroll.setPanSpeed(0.1F);
 
         Rectangle rectangle = new Rectangle();
         rectangle.setWidth(64);
@@ -37,5 +40,11 @@ public class ScrollDemo extends GuiRelativePane
         horizontalScroll.setChild(rectangle1);
 
         this.addChild(horizontalScroll, 0.5f, 0.75f);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "Scroll";
     }
 }

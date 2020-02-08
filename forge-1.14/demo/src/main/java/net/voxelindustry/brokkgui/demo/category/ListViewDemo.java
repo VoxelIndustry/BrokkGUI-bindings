@@ -11,7 +11,7 @@ import net.voxelindustry.brokkgui.wrapper.elements.MCTooltip;
 
 import java.util.Arrays;
 
-public class ListViewDemo extends GuiRelativePane
+public class ListViewDemo extends GuiRelativePane implements IDemoCategory
 {
     public ListViewDemo(GuiDemo gui)
     {
@@ -53,5 +53,11 @@ public class ListViewDemo extends GuiRelativePane
         toastLabel.setWidth(150);
         toastLabel.setHeight(20);
         button1.setOnActionEvent(e -> gui.toastManager.addToast(toastLabel, 3000L));
+    }
+
+    @Override
+    public String getName()
+    {
+        return "ListView";
     }
 }

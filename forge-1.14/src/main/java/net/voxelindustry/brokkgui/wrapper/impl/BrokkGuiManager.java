@@ -1,6 +1,7 @@
 package net.voxelindustry.brokkgui.wrapper.impl;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager.IScreenFactory;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.inventory.container.Container;
@@ -9,9 +10,8 @@ import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
 import net.voxelindustry.brokkgui.style.StylesheetManager;
 import net.voxelindustry.brokkgui.wrapper.container.BrokkGuiContainer;
 
-/**
- * @author Ourten 4 oct. 2016
- */
+import java.util.function.Function;
+
 public class BrokkGuiManager
 {
     public static Screen getBrokkGuiScreen(ITextComponent title, BrokkGuiScreen brokkGui)
@@ -31,7 +31,17 @@ public class BrokkGuiManager
 
     public static <T extends Container> ContainerScreen<T> getBrokkGuiContainer(String modID, ITextComponent title, BrokkGuiContainer<T> brokkGui)
     {
-        return new GuiContainerImpl<T>(modID, title, brokkGui);
+        return new GuiContainerImpl<>(modID, title, brokkGui);
+    }
+
+    public static <T extends Container> IScreenFactory<T, GuiContainerImpl<T>> getContainerFactory(String modid, Function<T, BrokkGuiContainer<T>> brokkGuiCreator)
+    {
+        return (container, inventory, title) -> new GuiContainerImpl<>(modid, title, brokkGuiCreator.apply(container));
+    }
+
+    public static <T extends Container> IScreenFactory<T, GuiContainerImpl<T>> getContainerFactory(Function<T, BrokkGuiContainer<T>> brokkGuiCreator)
+    {
+        return (container, inventory, title) -> new GuiContainerImpl<>(StylesheetManager.getInstance().DEFAULT_THEME, title, brokkGuiCreator.apply(container));
     }
 
     public static void openBrokkGuiScreen(ITextComponent title, BrokkGuiScreen brokkGui)

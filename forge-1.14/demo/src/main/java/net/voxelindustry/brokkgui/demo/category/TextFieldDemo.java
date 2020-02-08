@@ -6,7 +6,7 @@ import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
 
 import java.util.Arrays;
 
-public class TextFieldDemo extends GuiAbsolutePane
+public class TextFieldDemo extends GuiAbsolutePane implements IDemoCategory
 {
     public TextFieldDemo()
     {
@@ -33,5 +33,11 @@ public class TextFieldDemo extends GuiAbsolutePane
 
         expandField.setStyle("border-color: black; border-width: 1;");
         this.addChild(expandField, 0, 120);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "TextField";
     }
 }

@@ -7,6 +7,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 
+import java.util.logging.Logger;
+
 @Mod(BrokkGuiWrapperMod.MODID)
 public class BrokkGuiWrapperMod
 {
@@ -15,8 +17,11 @@ public class BrokkGuiWrapperMod
     public BrokkGuiWrapperMod()
     {
         BrokkGuiPlatform.getInstance().setPlatformName("MC1.14.4");
+        BrokkGuiPlatform.getInstance().setLogger(Logger.getLogger("BrokkGUI:1.14"));
+
         BrokkGuiPlatform.getInstance().setKeyboardUtil(new KeyboardUtil());
         BrokkGuiPlatform.getInstance().setMouseUtil(new MouseUtil());
+        BrokkGuiPlatform.getInstance().setResourceHandler(new ResourceHandler());
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
     }

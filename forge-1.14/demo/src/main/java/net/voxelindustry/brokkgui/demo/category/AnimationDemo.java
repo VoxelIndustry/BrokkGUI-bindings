@@ -1,13 +1,13 @@
 package net.voxelindustry.brokkgui.demo.category;
 
-import net.voxelindustry.brokkgui.animation.transition.TranslateTransition;
+import net.voxelindustry.brokkgui.animation.transition.ScaleTransition;
 import net.voxelindustry.brokkgui.control.GuiButtonBase;
 import net.voxelindustry.brokkgui.element.input.GuiRadioButton;
 import net.voxelindustry.brokkgui.panel.GuiRelativePane;
 
 import java.util.concurrent.TimeUnit;
 
-public class AnimationDemo extends GuiRelativePane
+public class AnimationDemo extends GuiRelativePane implements IDemoCategory
 {
     public AnimationDemo()
     {
@@ -15,12 +15,12 @@ public class AnimationDemo extends GuiRelativePane
         movingButton.setExpandToLabel(true);
         movingButton.setHeight(15);
 
-        TranslateTransition leftTransition = new TranslateTransition(movingButton, 3, TimeUnit.SECONDS);
+        ScaleTransition leftTransition = new ScaleTransition(movingButton, 3, TimeUnit.SECONDS);
         leftTransition.setMaxCycles(2);
         leftTransition.setReverse(true);
 
-        leftTransition.setTranslateX(100);
-        leftTransition.setTranslateY(60);
+        leftTransition.setTranslateX(2);
+        leftTransition.setTranslateY(2);
 
         movingButton.setOnActionEvent(e ->
         {
@@ -29,6 +29,12 @@ public class AnimationDemo extends GuiRelativePane
             else
                 leftTransition.restart();
         });
-        this.addChild(movingButton, 0, 0.5f);
+        this.addChild(movingButton, 0.5F, 0.5F);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "Animation";
     }
 }

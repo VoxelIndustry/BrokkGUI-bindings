@@ -8,11 +8,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.voxelindustry.brokkgui.data.RelativeBindingHelper;
 import net.voxelindustry.brokkgui.gui.SubGuiScreen;
 import net.voxelindustry.brokkgui.paint.Color;
-import net.voxelindustry.brokkgui.paint.Texture;
+import net.voxelindustry.brokkgui.sprite.Texture;
 import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
 import net.voxelindustry.brokkgui.wrapper.container.BrokkGuiContainer;
 import net.voxelindustry.brokkgui.wrapper.elements.FluidStackView;
 import net.voxelindustry.brokkgui.wrapper.elements.ItemStackView;
+import net.voxelindustry.brokkgui.wrapper.elements.MCTooltip;
 
 public class GuiContainerDemo extends BrokkGuiContainer<ContainerDemo>
 {
@@ -45,6 +46,8 @@ public class GuiContainerDemo extends BrokkGuiContainer<ContainerDemo>
         fluidStackView.setHeight(64);
         fluidStackView.setFlowing(true);
         fluidStackView.setOnClickEvent(e -> this.addSubGui(new SubWindow()));
+
+        fluidStackView.setTooltip(MCTooltip.build().line("TEST TOOLTIP").create());
 
         mainPanel.addChild(fluidStackView, 4, 4);
 

@@ -1,6 +1,5 @@
 package net.voxelindustry.brokkgui.wrapper.elements;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.voxelindustry.brokkgui.component.GuiNode;
@@ -66,7 +65,8 @@ public class MCTooltip extends GuiNode
     @Override
     protected void renderContent(IGuiRenderer renderer, RenderPass pass, int mouseX, int mouseY)
     {
-        GlStateManager.pushLightingAttributes();
+        if (pass != RenderPass.HOVER)
+            return;
 
         if (linesFiller != null)
         {
@@ -76,7 +76,5 @@ public class MCTooltip extends GuiNode
         GuiUtils.drawHoveringText(linesList, (int) this.getxPos(), (int) this.getyPos(),
                 Minecraft.getInstance().mainWindow.getWidth(), Minecraft.getInstance().mainWindow.getHeight(),
                 Minecraft.getInstance().mainWindow.getHeight(), Minecraft.getInstance().fontRenderer);
-
-        GlStateManager.popAttributes();
     }
 }

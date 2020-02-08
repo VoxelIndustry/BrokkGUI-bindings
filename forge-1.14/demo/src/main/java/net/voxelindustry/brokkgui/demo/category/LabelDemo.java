@@ -7,7 +7,7 @@ import net.voxelindustry.brokkgui.element.GuiLabel;
 import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
 import net.voxelindustry.brokkgui.shape.Rectangle;
 
-public class LabelDemo extends GuiAbsolutePane
+public class LabelDemo extends GuiAbsolutePane implements IDemoCategory
 {
     public LabelDemo()
     {
@@ -164,5 +164,11 @@ public class LabelDemo extends GuiAbsolutePane
         label3.setStyle("border-color: gray; border-width: 1;");
 
         this.addChild(label3, 105, 130);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "Label";
     }
 }
