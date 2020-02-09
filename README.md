@@ -7,9 +7,10 @@ The creation of third-party bindings is encouraged if you target a specific plat
 
 | Platform      | Status    | Future    |
 | ------------- | --------- | --------- |
-| Minecraft (Forge) 1.12 | Full features | :white_check_mark:**Latest** |
-| Minecraft (Forge) 1.14 | Full features | :warning:**Experimental** |
+| Minecraft (Forge) 1.12 | Full features | :white_check_mark:**Supported** |
+| Minecraft (Forge) 1.14 | Full major features | :white_check_mark:**Latest** |
 | Minecraft (Fabric) 1.14 | No containers | :warning:**Experimental** |
+| Minecraft (Forge) 1.15 | Full major features | :warning:**Experimental** |
 
 ## License
 

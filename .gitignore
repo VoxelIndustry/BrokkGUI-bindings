@@ -132,3 +132,5 @@ run/*
 demo/run/*
 forge-1.14/demo/out/*
 forge-1.14/demo/run/*
+forge-1.15/demo/out/*
+forge-1.15/demo/run/*
