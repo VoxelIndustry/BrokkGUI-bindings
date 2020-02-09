@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+
+[[mods]]
+    modId="brokkguidemo"
+    namespace="brokkguidemo"
+    version="${file.jarVersion}"
+    displayName="BrokkGui Demo"
+    description='''Description'''
+[[dependencies.brokkguidemo]]
+    modId="forge"
+    mandatory=true
+    versionRange="[${forge_version},)"
+    ordering="NONE"
+    side="BOTH"

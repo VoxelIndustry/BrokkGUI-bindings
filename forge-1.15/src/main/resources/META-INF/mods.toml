@@ -1,0 +1,16 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+
+[[mods]]
+    modId="brokkguiwrapper"
+    namespace="brokkguiwrapper"
+    version="${file.jarVersion}"
+    displayName="BrokkGui Wrapper"
+    authors="Ourten"
+    description='''Wrapper mod for the BrokkGUI Framework'''
+[[dependencies.brokkguiwrapper]]
+    modId="forge"
+    mandatory=true
+    versionRange="[${forge_version},)"
+    ordering="NONE"
+    side="BOTH"

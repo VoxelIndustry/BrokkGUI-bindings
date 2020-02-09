@@ -1,0 +1,114 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+group = "net.voxelindustry"
+compileJava.options.encoding = 'UTF-8'
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jar {
+    duplicatesStrategy = 'exclude'
+    exclude('net/voxelindustry/brokkgui/demo/**')
+}
+
+repositories {
+    mavenLocal()
+    maven { url 'http://maven.ferenyr.info/artifactory/libs-release' }
+    mavenCentral()
+}
+
+minecraft {
+    mappings channel: 'snapshot', version: "${project.mappings_version}"
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                brokkguidemo {
+                    source sourceSets.main
+                }
+                brokkguiwrapper {
+                    source rootProject.sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                brokkguidemo {
+                    source sourceSets.main
+                }
+                brokkguiwrapper {
+                    source rootProject.sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'brokkguidemo', '--mod', 'brokkguiwrapper', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                brokkguidemo {
+                    source sourceSets.main
+                }
+                brokkguiwrapper {
+                    source rootProject.sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+archivesBaseName = "brokkgui-demo-mc1.15"
+version = project.brokkgui_version
+
+dependencies {
+    compile project(":")
+    runtime project(":")
+    minecraft "net.minecraftforge:forge:${project.forge_version}"
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "brokkgui-demo-mc1.15",
+                "Specification-Vendor"    : "brokkgui-demo-mc1.15",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "brokkgui",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
