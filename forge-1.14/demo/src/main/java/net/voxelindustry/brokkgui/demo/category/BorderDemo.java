@@ -19,7 +19,7 @@ public class BorderDemo extends GuiRelativePane implements IDemoCategory
         imageBorder.setID("image-border");
         imageBorder.setSize(20, 20);
         imageBorder.setScale(2);
-        imageBorder.setStyle("border-image-source: url(\"brokkguidemo:textures/gui/image_border.png\"); " +
+        imageBorder.setStyle("border-image-source: assets(\"brokkguidemo:textures/gui/image_border.png\"); " +
                 "border-width: 4; border-image-slice: 40%; border-image-outset: 4; border-image-fill: true; background-color: red;");
 
         this.addChild(imageBorder, 0.75f, 0.5f);

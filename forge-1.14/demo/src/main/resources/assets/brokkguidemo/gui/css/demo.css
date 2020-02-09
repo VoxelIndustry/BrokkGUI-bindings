@@ -69,30 +69,30 @@ checkbox {
 }
 
 scrollpane .grip-y {
-    background-texture: url("brokkguidemo:textures/gui/scrollbar_vert.png");
+    background-texture: assets("brokkguidemo:textures/gui/scrollbar_vert.png");
     background-color: rgba(0, 0, 0, 0);
 }
 
 scrollpane .grip-x {
-    background-texture: url("brokkguidemo:textures/gui/scrollbar_horiz.png");
+    background-texture: assets("brokkguidemo:textures/gui/scrollbar_horiz.png");
     background-color: rgba(0, 0, 0, 0);
 }
 
 #vertscroll-rect {
-    background-texture: url("brokkguidemo:textures/gui/vert_scroll.png");
+    background-texture: assets("brokkguidemo:textures/gui/vert_scroll.png");
 }
 
 #horiscroll-rect {
-    background-texture: url("brokkguidemo:textures/gui/horiz_scroll.png");
+    background-texture: assets("brokkguidemo:textures/gui/horiz_scroll.png");
 }
 
 #animated-rect-demo {
-    background-texture: url("brokkguidemo:textures/gui/sprite_animation.png");
+    background-texture: assets("brokkguidemo:textures/gui/sprite_animation.png");
     background-animation: assets("brokkguidemo:textures/gui/sprite_animation.json");
 }
 
 #animated-repeated-rect-demo {
-    background-texture: url("brokkguidemo:textures/gui/sprite_animation.png", 8px, 8px);
+    background-texture: assets("brokkguidemo:textures/gui/sprite_animation.png", 8px, 8px);
     background-animation: assets("brokkguidemo:textures/gui/sprite_animation.json");
     background-repeat: repeat;
     background-rotation: clockwise 25% counterclockwise 25% upside 25%;

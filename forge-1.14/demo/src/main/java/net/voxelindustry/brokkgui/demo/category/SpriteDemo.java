@@ -13,7 +13,7 @@ public class SpriteDemo extends GuiRelativePane implements IDemoCategory
 
         Rectangle noRepeatRect = new Rectangle();
         noRepeatRect.setSize(16, 16);
-        noRepeatRect.setStyle("background-texture: url(\"brokkguidemo:textures/gui/sprite_background.png, 16px, 16px)");
+        noRepeatRect.setStyle("background-texture: assets(\"brokkguidemo:textures/gui/sprite_background.png, 16px, 16px)");
         noRepeatRect.setyTranslate(12);
         this.addChild(noRepeatRect, 0.25F, 0.2F);
 
@@ -23,7 +23,7 @@ public class SpriteDemo extends GuiRelativePane implements IDemoCategory
 
         Rectangle repeatXRect = new Rectangle();
         repeatXRect.setSize(16, 16);
-        repeatXRect.setStyle("background-texture: url(\"brokkguidemo:textures/gui/sprite_background.png, 8px, 16px); background-repeat: repeat-x;");
+        repeatXRect.setStyle("background-texture: assets(\"brokkguidemo:textures/gui/sprite_background.png, 8px, 16px); background-repeat: repeat-x;");
         repeatXRect.setyTranslate(12);
         this.addChild(repeatXRect, 0.75F, 0.2F);
 
@@ -32,7 +32,7 @@ public class SpriteDemo extends GuiRelativePane implements IDemoCategory
 
         Rectangle repeatYRect = new Rectangle();
         repeatYRect.setSize(16, 16);
-        repeatYRect.setStyle("background-texture: url(\"brokkguidemo:textures/gui/sprite_background.png, 16px, 8px); background-repeat: repeat-y;");
+        repeatYRect.setStyle("background-texture: assets(\"brokkguidemo:textures/gui/sprite_background.png, 16px, 8px); background-repeat: repeat-y;");
         repeatYRect.setyTranslate(12);
         this.addChild(repeatYRect, 0.25F, 0.4F);
 
@@ -41,7 +41,7 @@ public class SpriteDemo extends GuiRelativePane implements IDemoCategory
 
         Rectangle repeatBothRect = new Rectangle();
         repeatBothRect.setSize(16, 16);
-        repeatBothRect.setStyle("background-texture: url(\"brokkguidemo:textures/gui/sprite_background.png, 8px, 8px); background-repeat: repeat;");
+        repeatBothRect.setStyle("background-texture: assets(\"brokkguidemo:textures/gui/sprite_background.png, 8px, 8px); background-repeat: repeat;");
         repeatBothRect.setyTranslate(12);
         this.addChild(repeatBothRect, 0.75F, 0.4F);
 

@@ -1,6 +1,8 @@
-includeBuild('../central') {
-    dependencySubstitution {
-        substitute module('net.voxelindustry:brokkgui-core') with project(':core')
+if (new File(rootDir, '../../central').exists()) {
+    includeBuild('../../central') {
+        dependencySubstitution {
+            substitute module('net.voxelindustry:brokkgui-core') with project(':core')
+        }
     }
 }
 
