@@ -25,8 +25,10 @@ import net.voxelindustry.brokkgui.paint.Color;
 import net.voxelindustry.brokkgui.paint.RenderPass;
 import net.voxelindustry.brokkgui.sprite.SpriteRotation;
 import net.voxelindustry.brokkgui.sprite.Texture;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -146,6 +148,15 @@ public class GuiHelper implements IGuiHelper
         this.drawString(string, x, y, zLevel, textColor, Color.ALPHA);
     }
 
+    @Override
+    public void drawStringMultiline(String string, float x, float y, float zLevel, Color textColor, Color shadowColor, float lineSpacing)
+    {
+        String[] lines = StringUtils.splitPreserveAllTokens(string, '\n');
+        float lineHeight = getStringHeight();
+
+        for (int index = 0; index < lines.length; index++)
+            drawString(lines[index], x, y + (lineHeight + lineSpacing) * index, zLevel, textColor, shadowColor);
+    }
 
     @Override
     public void drawTexturedRect(IGuiRenderer renderer, float xStart, float yStart, float uMin, float vMin,
@@ -531,6 +542,20 @@ public class GuiHelper implements IGuiHelper
     public float getStringHeight()
     {
         return this.mc.fontRenderer.FONT_HEIGHT;
+    }
+
+    @Override
+    public float getStringWidthMultiLine(String str)
+    {
+        String[] lines = StringUtils.splitPreserveAllTokens(str, '\n');
+        return (float) Arrays.stream(lines).mapToDouble(this::getStringWidth).max().orElse(0);
+    }
+
+    @Override
+    public float getStringHeightMultiLine(String str, float lineSpacing)
+    {
+        String[] lines = StringUtils.splitPreserveAllTokens(str, '\n');
+        return lines.length * (getStringHeight() + lineSpacing);
     }
 
     @Override
