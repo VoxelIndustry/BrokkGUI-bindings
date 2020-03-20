@@ -1,5 +1,6 @@
 package net.voxelindustry.brokkgui.demo;
 
+import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 import net.voxelindustry.brokkgui.component.GuiNode;
 import net.voxelindustry.brokkgui.data.RectAlignment;
 import net.voxelindustry.brokkgui.data.RectBox;
@@ -16,12 +17,14 @@ import net.voxelindustry.brokkgui.element.GuiLabel;
 import net.voxelindustry.brokkgui.element.ToastManager;
 import net.voxelindustry.brokkgui.element.input.GuiButton;
 import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
+import net.voxelindustry.brokkgui.internal.profiler.GuiProfiler;
 import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
 import net.voxelindustry.brokkgui.panel.GuiRelativePane;
 import net.voxelindustry.brokkgui.sprite.Texture;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GuiDemo extends BrokkGuiScreen
 {
@@ -29,6 +32,8 @@ public class GuiDemo extends BrokkGuiScreen
 
     private List<IDemoCategory> demoPages = new ArrayList<>();
     private GuiNode             currentCategory;
+
+    private final Random rand = new Random();
 
     public GuiDemo()
     {
@@ -51,6 +56,7 @@ public class GuiDemo extends BrokkGuiScreen
         demoPages.add(new SpriteDemo());
 
         GuiAbsolutePane body = new GuiAbsolutePane();
+        body.setID("body");
         body.setSizeRatio(1, 1);
         mainPanel.addChild(body);
 
@@ -87,11 +93,22 @@ public class GuiDemo extends BrokkGuiScreen
         label.setWidth(150);
         label.setHeight(20);
         toastManager.addToast(label, 5_000L);
+
+        BrokkGuiPlatform.getInstance().setProfiler(new GuiProfiler());
     }
 
     @Override
     public void initGui()
     {
         super.initGui();
+    }
+
+    @Override
+    public void tick()
+    {
+        super.tick();
+
+        if (rand.nextInt(20) == 3)
+            System.out.println(((GuiProfiler) BrokkGuiPlatform.getInstance().getProfiler()).getHumanReport());
     }
 }

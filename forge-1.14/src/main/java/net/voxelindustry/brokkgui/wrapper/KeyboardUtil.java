@@ -26,6 +26,7 @@ public class KeyboardUtil implements IKeyboardUtil
         this.keyMap.put("BACK", GLFW.GLFW_KEY_BACKSPACE);
 
         this.keyMap.put("V", GLFW.GLFW_KEY_V);
+        this.keyMap.put("D", GLFW.GLFW_KEY_D);
 
         this.keyMap.put("RETURN", GLFW.GLFW_KEY_ENTER);
         this.keyMap.put("NUMPADENTER", GLFW.GLFW_KEY_KP_ENTER);

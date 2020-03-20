@@ -8,8 +8,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.voxelindustry.brokkgui.data.RelativeBindingHelper;
 import net.voxelindustry.brokkgui.gui.SubGuiScreen;
 import net.voxelindustry.brokkgui.paint.Color;
-import net.voxelindustry.brokkgui.sprite.Texture;
 import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
+import net.voxelindustry.brokkgui.sprite.Texture;
 import net.voxelindustry.brokkgui.wrapper.container.BrokkGuiContainer;
 import net.voxelindustry.brokkgui.wrapper.elements.FluidStackView;
 import net.voxelindustry.brokkgui.wrapper.elements.ItemStackView;
@@ -40,6 +40,12 @@ public class GuiContainerDemo extends BrokkGuiContainer<ContainerDemo>
         view.setHeight(18);
         view.setColor(new Color(1, 1, 1, 0.5f));
         mainPanel.addChild(view);
+
+        ItemStackView enchantedApple = new ItemStackView(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE));
+        enchantedApple.setItemTooltip(true);
+        enchantedApple.setWidth(18);
+        enchantedApple.setHeight(18);
+        mainPanel.addChild(enchantedApple);
 
         FluidStackView fluidStackView = new FluidStackView(new FluidStack(Fluids.WATER, 1000));
         fluidStackView.setWidth(18);

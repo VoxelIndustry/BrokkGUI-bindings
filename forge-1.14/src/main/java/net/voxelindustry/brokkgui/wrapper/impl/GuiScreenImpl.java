@@ -3,6 +3,7 @@ package net.voxelindustry.brokkgui.wrapper.impl;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.text.ITextComponent;
+import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 import net.voxelindustry.brokkgui.GuiFocusManager;
 import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
 import net.voxelindustry.brokkgui.gui.IGuiWindow;
@@ -21,6 +22,9 @@ public class GuiScreenImpl extends Screen implements IBrokkGuiImpl
 
     private IGuiWindow brokkgui;
 
+    private int cachedMouseX;
+    private int cachedMouseY;
+
     GuiScreenImpl(String modID, ITextComponent title, BrokkGuiScreen brokkgui)
     {
         super(title);
@@ -28,6 +32,9 @@ public class GuiScreenImpl extends Screen implements IBrokkGuiImpl
         this.modID = modID;
         this.renderer = new GuiRenderer(Tessellator.getInstance());
         this.brokkgui.setWrapper(this);
+
+        this.cachedMouseX = -1;
+        this.cachedMouseY = -1;
     }
 
     @Override
@@ -62,6 +69,14 @@ public class GuiScreenImpl extends Screen implements IBrokkGuiImpl
     {
         super.render(mouseX, mouseY, partialTicks);
 
+        BrokkGuiPlatform.getInstance().getProfiler().beginRenderFrame();
+
+        if (this.cachedMouseX != mouseX || this.cachedMouseY != mouseY)
+        {
+            this.brokkgui.onMouseMoved(mouseX, mouseY);
+            this.cachedMouseX = mouseX;
+            this.cachedMouseY = mouseY;
+        }
         this.brokkgui.render(mouseX, mouseY, RenderTarget.MAIN,
                 RenderPass.BACKGROUND, RenderPass.MAIN, RenderPass.FOREGROUND, RenderPass.HOVER, GuiHelper.ITEM_MAIN,
                 GuiHelper.ITEM_HOVER);
@@ -72,6 +87,8 @@ public class GuiScreenImpl extends Screen implements IBrokkGuiImpl
                 RenderPass.BACKGROUND, RenderPass.MAIN, RenderPass.FOREGROUND, RenderPass.HOVER, GuiHelper.ITEM_MAIN,
                 GuiHelper.ITEM_HOVER);
         this.brokkgui.renderLast(mouseX, mouseY);
+
+        BrokkGuiPlatform.getInstance().getProfiler().endRenderFrame();
 
         brokkgui.tick();
     }

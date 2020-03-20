@@ -17,7 +17,6 @@ public class SpriteDemo extends GuiRelativePane implements IDemoCategory
         noRepeatRect.setyTranslate(12);
         this.addChild(noRepeatRect, 0.25F, 0.2F);
 
-
         GuiLabel repeatXSpriteLabel = new GuiLabel("Repeat X");
         this.addChild(repeatXSpriteLabel, 0.75F, 0.2F);
 
