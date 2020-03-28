@@ -12,6 +12,7 @@ import net.voxelindustry.brokkgui.demo.category.ListViewDemo;
 import net.voxelindustry.brokkgui.demo.category.RadioButtonDemo;
 import net.voxelindustry.brokkgui.demo.category.ScrollDemo;
 import net.voxelindustry.brokkgui.demo.category.SpriteDemo;
+import net.voxelindustry.brokkgui.demo.category.SubWindowDemo;
 import net.voxelindustry.brokkgui.demo.category.TextFieldDemo;
 import net.voxelindustry.brokkgui.element.GuiLabel;
 import net.voxelindustry.brokkgui.element.ToastManager;
@@ -54,6 +55,7 @@ public class GuiDemo extends BrokkGuiScreen
         demoPages.add(new ScrollDemo());
         demoPages.add(new BorderDemo());
         demoPages.add(new SpriteDemo());
+        demoPages.add(new SubWindowDemo(this));
 
         GuiAbsolutePane body = new GuiAbsolutePane();
         body.setID("body");
