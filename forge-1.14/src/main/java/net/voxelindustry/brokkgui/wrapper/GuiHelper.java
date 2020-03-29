@@ -555,7 +555,7 @@ public class GuiHelper implements IGuiHelper
     public float getStringHeightMultiLine(String str, float lineSpacing)
     {
         String[] lines = StringUtils.splitPreserveAllTokens(str, '\n');
-        return lines.length * (getStringHeight() + lineSpacing);
+        return lines.length * getStringHeight() + (lines.length - 1) * lineSpacing;
     }
 
     @Override

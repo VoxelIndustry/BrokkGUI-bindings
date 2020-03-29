@@ -104,13 +104,4 @@ public class GuiDemo extends BrokkGuiScreen
     {
         super.initGui();
     }
-
-    @Override
-    public void tick()
-    {
-        super.tick();
-
-        if (rand.nextInt(20) == 3)
-            System.out.println(((GuiProfiler) BrokkGuiPlatform.getInstance().getProfiler()).getHumanReport());
-    }
 }
