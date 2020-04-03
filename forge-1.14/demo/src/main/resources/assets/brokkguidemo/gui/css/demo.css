@@ -97,3 +97,7 @@ scrollpane .grip-x {
     background-repeat: repeat;
     background-rotation: clockwise 25% counterclockwise 25% upside 25%;
 }
+
+#body {
+    foreground-color: #DD8888 20%;
+}

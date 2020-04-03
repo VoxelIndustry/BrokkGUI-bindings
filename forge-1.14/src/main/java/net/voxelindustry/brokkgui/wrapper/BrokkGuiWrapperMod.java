@@ -6,13 +6,14 @@ import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
+import net.voxelindustry.brokkgui.wrapper.overlay.GuiOverlayEventHandler;
 
 import java.util.logging.Logger;
 
 @Mod(BrokkGuiWrapperMod.MODID)
 public class BrokkGuiWrapperMod
 {
-    public static final String MODID   = "brokkguiwrapper";
+    public static final String MODID = "brokkguiwrapper";
 
     public BrokkGuiWrapperMod()
     {
@@ -35,6 +36,8 @@ public class BrokkGuiWrapperMod
             BrokkGuiTickSender tickSender = new BrokkGuiTickSender();
             MinecraftForge.EVENT_BUS.register(tickSender);
             BrokkGuiPlatform.getInstance().setTickSender(tickSender);
+
+            MinecraftForge.EVENT_BUS.register(new GuiOverlayEventHandler());
         }
     }
 }

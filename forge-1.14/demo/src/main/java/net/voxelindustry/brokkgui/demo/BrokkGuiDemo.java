@@ -2,6 +2,7 @@ package net.voxelindustry.brokkgui.demo;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 import net.voxelindustry.brokkgui.wrapper.impl.BrokkGuiManager;
+import net.voxelindustry.brokkgui.wrapper.overlay.GuiOverlayManager;
 
 import javax.annotation.Nullable;
 
@@ -60,6 +62,8 @@ public class BrokkGuiDemo
         MinecraftForge.EVENT_BUS.register(this);
 
         DistExecutor.runWhenOn(Dist.CLIENT, () -> this::screenInit);
+
+        GuiOverlayManager.addGuiOverlay(GuiOverlayDemo::new, MainMenuScreen.class);
     }
 
     private void screenInit()
@@ -86,7 +90,7 @@ public class BrokkGuiDemo
                 if (world.isRemote && !player.isSneaking())
                     Minecraft.getInstance().displayGuiScreen(BrokkGuiManager.getBrokkGuiScreen(new StringTextComponent("demo"), new GuiDemo()));
                 else if (!world.isRemote && player.isSneaking())
-                  NetworkHooks.openGui((ServerPlayerEntity) player, new DummyDemoContainerProvider());
+                    NetworkHooks.openGui((ServerPlayerEntity) player, new DummyDemoContainerProvider());
                 return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
             }
         }.setRegistryName("itembrokkguitest"));
