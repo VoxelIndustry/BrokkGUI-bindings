@@ -26,9 +26,11 @@ import net.voxelindustry.brokkgui.paint.Color;
 import net.voxelindustry.brokkgui.paint.RenderPass;
 import net.voxelindustry.brokkgui.sprite.SpriteRotation;
 import net.voxelindustry.brokkgui.sprite.Texture;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -62,17 +64,63 @@ public class GuiHelper implements IGuiHelper
     }
 
     @Override
-    public void scissorBox(float f, float g, float h, float i)
+    public void scissorBox(float xStart, float yStart, float xEnd, float yEnd)
     {
-        int width = (int) (h - f);
-        int height = (int) (i - g);
         double factor = this.mc.getMainWindow().getGuiScaleFactor();
+
+        // Needed to prevent pixel bleeding when scissor is active
+        // This must be properly checked after a binding update
+        // TODO : Ensure there are only 1 - 2 - 3 and 4 scaleFactor for MC GUI
+        int topOffset = 0;
+        int bottomOffset = 0;
+
+        int heightRatio = (int) ((double) Minecraft.getInstance().getMainWindow().getFramebufferHeight() / factor);
+        boolean doesHeightNeedOffset = (double) Minecraft.getInstance().getMainWindow().getFramebufferHeight() / factor > (double) heightRatio;
+
+        if (factor == 4)
+        {
+            topOffset = -4;
+            bottomOffset = 1;
+        }
+        else if (factor == 3)
+        {
+            if (doesHeightNeedOffset)
+            {
+                topOffset = -2;
+                bottomOffset = 1;
+            }
+            else
+            {
+                topOffset = -3;
+                bottomOffset = 3;
+            }
+        }
+        else if (factor == 2)
+        {
+            if (doesHeightNeedOffset)
+            {
+                topOffset = -2;
+                bottomOffset = 1;
+            }
+            else
+            {
+                topOffset = -2;
+                bottomOffset = 2;
+            }
+        }
+        else if (factor == 1)
+        {
+            topOffset = -1;
+            bottomOffset = 1;
+        }
+
+        int width = (int) (xEnd - xStart);
+        int height = (int) (yEnd - yStart);
         Screen currentScreen = this.mc.currentScreen;
         if (currentScreen != null)
         {
-            int bottomY = (int) (currentScreen.height - i);
-            GL11.glScissor((int) (f * factor), (int) (bottomY * factor), (int) (width * factor),
-                    (int) (height * factor));
+            int bottomY = (int) (currentScreen.height - yEnd);
+            GL11.glScissor((int) (xStart * factor), (int) (bottomY * factor) + bottomOffset, (int) (width * factor), (int) (height * factor) + topOffset);
         }
     }
 
@@ -100,6 +148,16 @@ public class GuiHelper implements IGuiHelper
     public void drawString(String string, float x, float y, float zLevel, Color textColor)
     {
         this.drawString(string, x, y, zLevel, textColor, Color.ALPHA);
+    }
+
+    @Override
+    public void drawStringMultiline(String string, float x, float y, float zLevel, Color textColor, Color shadowColor, float lineSpacing)
+    {
+        String[] lines = StringUtils.splitPreserveAllTokens(string, '\n');
+        float lineHeight = getStringHeight();
+
+        for (int index = 0; index < lines.length; index++)
+            drawString(lines[index], x, y + (lineHeight + lineSpacing) * index, zLevel, textColor, shadowColor);
     }
 
     @Override
@@ -485,6 +543,20 @@ public class GuiHelper implements IGuiHelper
     public float getStringHeight()
     {
         return this.mc.fontRenderer.FONT_HEIGHT;
+    }
+
+    @Override
+    public float getStringWidthMultiLine(String str)
+    {
+        String[] lines = StringUtils.splitPreserveAllTokens(str, '\n');
+        return (float) Arrays.stream(lines).mapToDouble(this::getStringWidth).max().orElse(0);
+    }
+
+    @Override
+    public float getStringHeightMultiLine(String str, float lineSpacing)
+    {
+        String[] lines = StringUtils.splitPreserveAllTokens(str, '\n');
+        return lines.length * getStringHeight() + (lines.length - 1) * lineSpacing;
     }
 
     @Override

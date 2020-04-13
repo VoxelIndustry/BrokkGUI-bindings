@@ -21,6 +21,9 @@ public class GuiScreenImpl extends Screen implements IBrokkGuiImpl
 
     private IGuiWindow brokkgui;
 
+    private int cachedMouseX;
+    private int cachedMouseY;
+
     GuiScreenImpl(String modID, ITextComponent title, BrokkGuiScreen brokkgui)
     {
         super(title);
@@ -28,6 +31,9 @@ public class GuiScreenImpl extends Screen implements IBrokkGuiImpl
         this.modID = modID;
         this.renderer = new GuiRenderer(Tessellator.getInstance());
         this.brokkgui.setWrapper(this);
+
+        this.cachedMouseX = -1;
+        this.cachedMouseY = -1;
     }
 
     @Override
@@ -62,6 +68,13 @@ public class GuiScreenImpl extends Screen implements IBrokkGuiImpl
     {
         super.render(mouseX, mouseY, partialTicks);
 
+        if (this.cachedMouseX != mouseX || this.cachedMouseY != mouseY)
+        {
+            this.brokkgui.onMouseMoved(mouseX, mouseY);
+            this.cachedMouseX = mouseX;
+            this.cachedMouseY = mouseY;
+        }
+        
         this.brokkgui.render(mouseX, mouseY, RenderTarget.MAIN,
                 RenderPass.BACKGROUND, RenderPass.MAIN, RenderPass.FOREGROUND, RenderPass.HOVER, GuiHelper.ITEM_MAIN,
                 GuiHelper.ITEM_HOVER);
