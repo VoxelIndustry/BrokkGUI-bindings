@@ -20,9 +20,9 @@ public class FluidStackViewSkin extends GuiBehaviorSkinBase<FluidStackView, Flui
         if (pass == RenderPass.MAIN)
         {
             ((GuiHelper) renderer.getHelper()).drawFluidStack(renderer,
-                    this.getModel().getLeftPos(), this.getModel().getTopPos(),
-                    this.getModel().getWidth(), this.getModel().getHeight(), this.getModel().getzLevel(),
-                    this.getModel().getFluidStack(), this.getModel().isFlowing());
+                    getModel().getLeftPos(), getModel().getTopPos(),
+                    getModel().width(), getModel().height(), getModel().transform().zLevel(),
+                    getModel().getFluidStack(), getModel().isFlowing());
         }
     }
 }

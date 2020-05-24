@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.voxelindustry.brokkgui.BrokkGuiBootstrap;
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
 import net.voxelindustry.brokkgui.wrapper.overlay.GuiOverlayEventHandler;
 
@@ -23,6 +24,8 @@ public class BrokkGuiWrapperMod
         BrokkGuiPlatform.getInstance().setKeyboardUtil(new KeyboardUtil());
         BrokkGuiPlatform.getInstance().setMouseUtil(new MouseUtil());
         BrokkGuiPlatform.getInstance().setResourceHandler(new ResourceHandler());
+
+        BrokkGuiBootstrap.getInstance();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
     }

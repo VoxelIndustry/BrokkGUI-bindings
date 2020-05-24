@@ -6,8 +6,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
-import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
 import net.voxelindustry.brokkgui.style.StylesheetManager;
+import net.voxelindustry.brokkgui.window.BrokkGuiScreen;
 import net.voxelindustry.brokkgui.wrapper.container.BrokkGuiContainer;
 
 import java.util.function.Function;

@@ -3,15 +3,16 @@ package net.voxelindustry.brokkgui.demo.category;
 import net.voxelindustry.brokkgui.data.RelativeBindingHelper;
 import net.voxelindustry.brokkgui.demo.GuiDemo;
 import net.voxelindustry.brokkgui.element.input.GuiButton;
-import net.voxelindustry.brokkgui.gui.SubGuiScreen;
-import net.voxelindustry.brokkgui.panel.GuiRelativePane;
+import net.voxelindustry.brokkgui.element.pane.GuiRelativePane;
+import net.voxelindustry.brokkgui.style.StyleComponent;
+import net.voxelindustry.brokkgui.window.SubGuiScreen;
 
 public class SubWindowDemo extends GuiRelativePane implements IDemoCategory
 {
     public SubWindowDemo(GuiDemo parent)
     {
         GuiButton openWindow = new GuiButton("Open");
-        openWindow.setSize(100, 20);
+        openWindow.size(100, 20);
 
         SubGuiScreen subWindow = new NestedWindow();
 
@@ -32,18 +33,18 @@ public class SubWindowDemo extends GuiRelativePane implements IDemoCategory
         {
             super(0.5F, 0.5F);
 
-            setSize(150, 150);
-            setzLevel(300);
-            setStyle("border-color: black; border-width: 1; background-color: #BDBDBD;");
+            size(150, 150);
+            transform().zLevel(300);
+            get(StyleComponent.class).parseInlineCSS("border-color: black; border-width: 1; background-color: #BDBDBD;");
 
             setCloseOnClick(false);
 
             GuiButton closeButton = new GuiButton("CLOSE");
             closeButton.setExpandToLabel(true);
-            this.addChild(closeButton);
-            RelativeBindingHelper.bindToPos(closeButton, this);
+            addChild(closeButton);
+            RelativeBindingHelper.bindToPos(closeButton.transform(), transform());
 
-            closeButton.setOnActionEvent(e -> this.close());
+            closeButton.setOnActionEvent(e -> close());
         }
     }
 }

@@ -3,7 +3,7 @@ package net.voxelindustry.brokkgui.demo.category;
 import net.voxelindustry.brokkgui.animation.transition.ScaleTransition;
 import net.voxelindustry.brokkgui.control.GuiButtonBase;
 import net.voxelindustry.brokkgui.element.input.GuiRadioButton;
-import net.voxelindustry.brokkgui.panel.GuiRelativePane;
+import net.voxelindustry.brokkgui.element.pane.GuiRelativePane;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,7 +13,7 @@ public class AnimationDemo extends GuiRelativePane implements IDemoCategory
     {
         GuiButtonBase movingButton = new GuiRadioButton("GO LEFT");
         movingButton.setExpandToLabel(true);
-        movingButton.setHeight(15);
+        movingButton.transform().height(15);
 
         ScaleTransition leftTransition = new ScaleTransition(movingButton, 3, TimeUnit.SECONDS);
         leftTransition.setMaxCycles(2);
@@ -29,7 +29,7 @@ public class AnimationDemo extends GuiRelativePane implements IDemoCategory
             else
                 leftTransition.restart();
         });
-        this.addChild(movingButton, 0.5F, 0.5F);
+        addChild(movingButton, 0.5F, 0.5F);
     }
 
     @Override

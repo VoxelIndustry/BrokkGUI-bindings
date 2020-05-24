@@ -1,6 +1,6 @@
 package net.voxelindustry.brokkgui.demo;
 
-import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
+import net.voxelindustry.brokkgui.window.BrokkGuiScreen;
 
 public class GuiOverlayDemo extends BrokkGuiScreen
 {
@@ -14,7 +14,7 @@ public class GuiOverlayDemo extends BrokkGuiScreen
     {
         super.initGui();
 
-        this.setWidth(getScreenWidth());
-        this.setHeight(getScreenHeight());
+        setWidth(getScreenWidth());
+        setHeight(getScreenHeight());
     }
 }

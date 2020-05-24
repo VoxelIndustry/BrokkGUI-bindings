@@ -2,20 +2,18 @@ package net.voxelindustry.brokkgui.wrapper.elements;
 
 import fr.ourten.teabeans.value.BaseProperty;
 import net.minecraftforge.fluids.FluidStack;
-import net.voxelindustry.brokkgui.control.GuiElement;
+import net.voxelindustry.brokkgui.control.GuiSkinedElement;
 import net.voxelindustry.brokkgui.skin.GuiSkinBase;
 
-public class FluidStackView extends GuiElement
+public class FluidStackView extends GuiSkinedElement
 {
     private BaseProperty<FluidStack> fluidStackProperty;
 
     public FluidStackView(FluidStack stack)
     {
-        super("fluidstack");
+        fluidStackProperty = new BaseProperty<>(stack, "fluidStackProperty");
 
-        this.fluidStackProperty = new BaseProperty<>(stack, "fluidStackProperty");
-
-        this.getStyle().registerProperty("flowing", false, Boolean.class);
+        style().registerProperty("flowing", false, Boolean.class);
     }
 
     @Override
@@ -31,26 +29,32 @@ public class FluidStackView extends GuiElement
 
     public BaseProperty<Boolean> getFlowingProperty()
     {
-        return getStyle().getStyleProperty("flowing", Boolean.class);
+        return style().getProperty("flowing", Boolean.class);
     }
 
     public FluidStack getFluidStack()
     {
-        return this.getFluidStackProperty().getValue();
+        return getFluidStackProperty().getValue();
     }
 
     public void setFluidStack(FluidStack stack)
     {
-        this.getFluidStackProperty().setValue(stack);
+        getFluidStackProperty().setValue(stack);
     }
 
     public boolean isFlowing()
     {
-        return this.getFlowingProperty().getValue();
+        return getFlowingProperty().getValue();
     }
 
     public void setFlowing(boolean isFlowing)
     {
-        this.getFlowingProperty().setValue(isFlowing);
+        getFlowingProperty().setValue(isFlowing);
+    }
+
+    @Override
+    public String type()
+    {
+        return "fluidstack";
     }
 }

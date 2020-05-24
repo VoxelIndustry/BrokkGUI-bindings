@@ -1,7 +1,7 @@
 package net.voxelindustry.brokkgui.wrapper.overlay;
 
 import net.minecraft.client.gui.screen.Screen;
-import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
+import net.voxelindustry.brokkgui.window.BrokkGuiScreen;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;

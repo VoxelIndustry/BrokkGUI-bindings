@@ -1,7 +1,7 @@
 package net.voxelindustry.brokkgui.demo;
 
 import net.voxelindustry.brokkgui.BrokkGuiPlatform;
-import net.voxelindustry.brokkgui.component.GuiNode;
+import net.voxelindustry.brokkgui.component.GuiElement;
 import net.voxelindustry.brokkgui.data.RectAlignment;
 import net.voxelindustry.brokkgui.data.RectBox;
 import net.voxelindustry.brokkgui.demo.category.AnimationDemo;
@@ -17,11 +17,11 @@ import net.voxelindustry.brokkgui.demo.category.TextFieldDemo;
 import net.voxelindustry.brokkgui.element.GuiLabel;
 import net.voxelindustry.brokkgui.element.ToastManager;
 import net.voxelindustry.brokkgui.element.input.GuiButton;
-import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
-import net.voxelindustry.brokkgui.internal.profiler.GuiProfiler;
-import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
-import net.voxelindustry.brokkgui.panel.GuiRelativePane;
+import net.voxelindustry.brokkgui.element.pane.GuiAbsolutePane;
+import net.voxelindustry.brokkgui.element.pane.GuiRelativePane;
+import net.voxelindustry.brokkgui.profiler.GuiProfiler;
 import net.voxelindustry.brokkgui.sprite.Texture;
+import net.voxelindustry.brokkgui.window.BrokkGuiScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class GuiDemo extends BrokkGuiScreen
     public ToastManager toastManager;
 
     private List<IDemoCategory> demoPages = new ArrayList<>();
-    private GuiNode             currentCategory;
+    private GuiElement          currentCategory;
 
     private final Random rand = new Random();
 
@@ -40,12 +40,12 @@ public class GuiDemo extends BrokkGuiScreen
     {
         super(0.5f, 0.5f, 200, 200);
 
-        this.addStylesheet("/assets/brokkguidemo/gui/css/demo.css");
+        addStylesheet("/assets/brokkguidemo/gui/css/demo.css");
 
-        final GuiRelativePane mainPanel = new GuiRelativePane();
-        this.setMainPanel(mainPanel);
+        GuiRelativePane mainPanel = new GuiRelativePane();
+        setMainPanel(mainPanel);
 
-        mainPanel.setBackgroundTexture(new Texture("brokkguidemo:textures/gui/background.png"));
+        mainPanel.paint().backgroundTexture(new Texture("brokkguidemo:textures/gui/background.png"));
 
         demoPages.add(new TextFieldDemo());
         demoPages.add(new ListViewDemo(this));
@@ -58,42 +58,42 @@ public class GuiDemo extends BrokkGuiScreen
         demoPages.add(new SubWindowDemo(this));
 
         GuiAbsolutePane body = new GuiAbsolutePane();
-        body.setID("body");
-        body.setSizeRatio(1, 1);
+        body.id("body");
+        body.transform().sizeRatio(1, 1);
         mainPanel.addChild(body);
 
         GuiRelativePane categoryHolder = new GuiRelativePane();
-        categoryHolder.setSizeRatio(1, 1);
+        categoryHolder.transform().sizeRatio(1, 1);
         mainPanel.addChild(categoryHolder);
 
         for (int index = 0; index < demoPages.size(); index++)
         {
             GuiButton button = new GuiButton(demoPages.get(index).getName());
-            button.addStyleClass("demo-category-button");
-            button.setSize(55, 20);
+            button.style().addStyleClass("demo-category-button");
+            button.size(55, 20);
             int finalIndex = index;
             button.setOnActionEvent(e ->
             {
-                currentCategory = (GuiNode) demoPages.get(finalIndex);
-                currentCategory.setSize(200, 200);
+                currentCategory = (GuiElement) demoPages.get(finalIndex);
+                currentCategory.size(200, 200);
                 categoryHolder.addChild(currentCategory);
                 body.setVisible(false);
             });
             body.addChild(button, 8 + index % 3 * 63, 10 + index / 3 * 25);
         }
 
-        this.getMainPanel().setID("mainpane");
+        getMainPanel().id("mainpane");
 
-        this.toastManager = new ToastManager(this);
+        toastManager = new ToastManager(this);
         toastManager.setRelativeXPos(0.5f);
         toastManager.setRelativeYPos(0.98f);
         toastManager.setToastAlignment(RectAlignment.MIDDLE_UP);
 
         GuiLabel label = new GuiLabel("Toast");
-        label.addStyleClass("toast-label");
+        label.style().addStyleClass("toast-label");
         label.setTextPadding(new RectBox(2, 0, 2, 0));
-        label.setWidth(150);
-        label.setHeight(20);
+        label.width(150);
+        label.height(20);
         toastManager.addToast(label, 5_000L);
 
         BrokkGuiPlatform.getInstance().setProfiler(new GuiProfiler());

@@ -3,7 +3,7 @@ package net.voxelindustry.brokkgui.wrapper.container;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
+import net.voxelindustry.brokkgui.window.BrokkGuiScreen;
 import net.voxelindustry.brokkgui.wrapper.event.SlotEvent;
 import net.voxelindustry.hermod.EventHandler;
 

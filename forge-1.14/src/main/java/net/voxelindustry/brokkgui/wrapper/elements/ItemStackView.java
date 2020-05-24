@@ -3,7 +3,7 @@ package net.voxelindustry.brokkgui.wrapper.elements;
 import fr.ourten.teabeans.value.BaseProperty;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.voxelindustry.brokkgui.control.GuiElement;
+import net.voxelindustry.brokkgui.control.GuiSkinedElement;
 import net.voxelindustry.brokkgui.paint.Color;
 import net.voxelindustry.brokkgui.skin.GuiSkinBase;
 
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  * A custom node used only for itemstack display. It cannot be used as a
  * replacement of a slot.
  */
-public class ItemStackView extends GuiElement
+public class ItemStackView extends GuiSkinedElement
 {
     private final BaseProperty<String>    alternateStringProperty;
     private final BaseProperty<ItemStack> stackProperty;
@@ -27,15 +27,13 @@ public class ItemStackView extends GuiElement
 
     private Consumer<List<ITextComponent>> stackTooltipModifier;
 
-    public ItemStackView(final ItemStack stack)
+    public ItemStackView(ItemStack stack)
     {
-        super("itemstack");
+        stackProperty = new BaseProperty<>(stack, "stackProperty");
+        alternateStringProperty = new BaseProperty<>(null, "alternateStringProperty");
+        itemTooltipProperty = new BaseProperty<>(false, "itemTooltipProperty");
 
-        this.stackProperty = new BaseProperty<>(stack, "stackProperty");
-        this.alternateStringProperty = new BaseProperty<>(null, "alternateStringProperty");
-        this.itemTooltipProperty = new BaseProperty<>(false, "itemTooltipProperty");
-
-        this.colorProperty = new BaseProperty<>(Color.WHITE, "colorProperty");
+        colorProperty = new BaseProperty<>(Color.WHITE, "colorProperty");
     }
 
     public ItemStackView()
@@ -43,73 +41,79 @@ public class ItemStackView extends GuiElement
         this(ItemStack.EMPTY);
     }
 
+    @Override
+    public String type()
+    {
+        return "itemstack";
+    }
+
     public BaseProperty<ItemStack> getStackProperty()
     {
-        return this.stackProperty;
+        return stackProperty;
     }
 
     public BaseProperty<String> getAlternateStringProperty()
     {
-        return this.alternateStringProperty;
+        return alternateStringProperty;
     }
 
     public BaseProperty<Boolean> getItemTooltipProperty()
     {
-        return this.itemTooltipProperty;
+        return itemTooltipProperty;
     }
 
     public BaseProperty<Color> getColorProperty()
     {
-        return this.colorProperty;
+        return colorProperty;
     }
 
     public ItemStack getItemStack()
     {
-        return this.stackProperty.getValue();
+        return stackProperty.getValue();
     }
 
-    public void setItemStack(final ItemStack stack)
+    public void setItemStack(ItemStack stack)
     {
-        this.stackProperty.setValue(stack);
+        stackProperty.setValue(stack);
     }
 
     public String getAlternateString()
     {
-        return this.alternateStringProperty.getValue();
+        return alternateStringProperty.getValue();
     }
 
     /**
      * @param alternateString a string to be displayed in place of the usual itemstack quantity
      *                        number at the down-right corner.
      */
-    public void setAlternateString(final String alternateString)
+    public void setAlternateString(String alternateString)
     {
-        this.alternateStringProperty.setValue(alternateString);
+        alternateStringProperty.setValue(alternateString);
     }
 
     public boolean hasItemTooltip()
     {
-        return this.getItemTooltipProperty().getValue();
+        return getItemTooltipProperty().getValue();
     }
 
-    public void setItemTooltip(final boolean tooltip)
+    public void setItemTooltip(boolean tooltip)
     {
-        this.getItemTooltipProperty().setValue(tooltip);
+        getItemTooltipProperty().setValue(tooltip);
     }
 
     public Color getColor()
     {
-        return this.getColorProperty().getValue();
+        return getColorProperty().getValue();
     }
 
     public void setColor(Color color)
     {
-        this.getColorProperty().setValue(color);
+        getColorProperty().setValue(color);
     }
 
     public Consumer<List<ITextComponent>> getStackTooltipModifier()
     {
-        return this.stackTooltipModifier;
+        return stackTooltipModifier;
     }
 
     public void setStackTooltipModifier(Consumer<List<ITextComponent>> stackTooltipModifier)

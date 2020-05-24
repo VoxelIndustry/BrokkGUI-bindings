@@ -1,8 +1,9 @@
 package net.voxelindustry.brokkgui.wrapper.elements;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.voxelindustry.brokkgui.component.GuiNode;
+import net.voxelindustry.brokkgui.component.GuiElement;
 import net.voxelindustry.brokkgui.element.GuiTooltip;
 import net.voxelindustry.brokkgui.internal.IGuiRenderer;
 import net.voxelindustry.brokkgui.paint.RenderPass;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MCTooltip extends GuiNode
+public class MCTooltip extends GuiElement
 {
     public static Builder build()
     {
@@ -30,7 +31,7 @@ public class MCTooltip extends GuiNode
 
         public Builder line(String line)
         {
-            this.lines.add(line);
+            lines.add(line);
             return this;
         }
 
@@ -56,8 +57,6 @@ public class MCTooltip extends GuiNode
 
     public MCTooltip(Consumer<List<String>> linesFiller, List<String> linesList)
     {
-        super("mctooltip");
-
         this.linesList = linesList;
         this.linesFiller = linesFiller;
     }
@@ -73,8 +72,18 @@ public class MCTooltip extends GuiNode
             linesList.clear();
             linesFiller.accept(linesList);
         }
-        GuiUtils.drawHoveringText(linesList, (int) this.getxPos(), (int) this.getyPos(),
+        GlStateManager.pushLightingAttributes();
+
+        GuiUtils.drawHoveringText(linesList, (int) transform().xPos(), (int) transform().yPos(),
                 Minecraft.getInstance().mainWindow.getWidth(), Minecraft.getInstance().mainWindow.getHeight(),
                 Minecraft.getInstance().mainWindow.getHeight(), Minecraft.getInstance().fontRenderer);
+
+        GlStateManager.popAttributes();
+    }
+
+    @Override
+    public String type()
+    {
+        return "mctooltip";
     }
 }

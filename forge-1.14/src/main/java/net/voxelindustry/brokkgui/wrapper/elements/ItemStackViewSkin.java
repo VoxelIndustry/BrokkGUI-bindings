@@ -23,9 +23,9 @@ public class ItemStackViewSkin extends GuiBehaviorSkinBase<ItemStackView, ItemSt
         if (pass == GuiHelper.ITEM_MAIN)
         {
             ((GuiHelper) renderer.getHelper()).drawItemStack(renderer,
-                    getModel().getLeftPos() + getModel().getWidth() / 2,
-                    getModel().getTopPos() + getModel().getHeight() / 2,
-                    getModel().getWidth(), getModel().getHeight(), getModel().getzLevel(),
+                    getModel().getLeftPos() + getModel().width() / 2,
+                    getModel().getTopPos() + getModel().height() / 2,
+                    getModel().width(), getModel().height(), getModel().transform().zLevel(),
                     getModel().getItemStack(), getModel().getAlternateString(), getModel().getColor());
         }
         else if (pass == GuiHelper.ITEM_HOVER)
