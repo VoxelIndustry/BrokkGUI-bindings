@@ -1,0 +1,103 @@
+mainpane {
+    border-color: aqua;
+    border-width: 1;
+}
+
+.demo-category-button {
+    border-color: #7F7F7F;
+    border-width: 1;
+    background-color: #BDBDBD;
+}
+
+.demo-category-button:hover {
+    background-color: #CDCDCD;
+}
+
+listcell > button:hover {
+    background-color: #FFCDD2;
+    border-color: #F0F4C3;
+}
+
+listcell > button:hover > > text {
+    color: yellow;
+}
+
+listcell > button {
+    background-color: #E57373;
+    border-color: #DCE775;
+    border-width: 1;
+}
+
+listcell > button > > text {
+    shadow: false;
+}
+
+radio-button {
+    background-color: #E0E0E0;
+}
+
+checkbox {
+    background-color: #E0E0E0;
+}
+
+.toast-label {
+    background-color: gray;
+}
+
+.toast-label:hover {
+    background-color: #c0d6e4 70%;
+}
+
+.toast-label text {
+    shadow: false;
+}
+
+#autocomplete {
+    background-color: #BDBDBD;
+}
+
+#autocomplete .complete-popup {
+    background-color: #F5F5F5 50%;
+}
+
+#autocomplete .complete-popup text {
+    shadow: false;
+}
+
+#autocomplete .complete-popup label:select, #autocomplete .complete-popup label:hover {
+    background-color: #BDBDBD 50%;
+}
+
+scrollpane .grip-y {
+    background-texture: assets("brokkguidemo:textures/gui/scrollbar_vert.png");
+    background-color: rgba(0, 0, 0, 0);
+}
+
+scrollpane .grip-x {
+    background-texture: assets("brokkguidemo:textures/gui/scrollbar_horiz.png");
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#vertscroll-rect {
+    background-texture: assets("brokkguidemo:textures/gui/vert_scroll.png");
+}
+
+#horiscroll-rect {
+    background-texture: assets("brokkguidemo:textures/gui/horiz_scroll.png");
+}
+
+#animated-rect-demo {
+    background-texture: assets("brokkguidemo:textures/gui/sprite_animation.png");
+    background-animation: assets("brokkguidemo:textures/gui/sprite_animation.json");
+}
+
+#animated-repeated-rect-demo {
+    background-texture: assets("brokkguidemo:textures/gui/sprite_animation.png", 8px, 8px);
+    background-animation: assets("brokkguidemo:textures/gui/sprite_animation.json");
+    background-repeat: repeat;
+    background-rotation: clockwise 25% counterclockwise 25% upside 25%;
+}
+
+#body {
+    foreground-color: #DD8888 20%;
+}

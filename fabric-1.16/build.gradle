@@ -1,0 +1,111 @@
+plugins {
+    id "com.jfrog.artifactory" version "4.16.1"
+    id 'fabric-loom' version '0.4-SNAPSHOT'
+    id 'maven-publish'
+}
+
+apply plugin: 'maven-publish'
+apply plugin: 'java-library'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'fabric-loom'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+archivesBaseName = project.archives_base_name
+version = project.brokkgui_version
+group = project.maven_group
+
+repositories {
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+    maven {
+        name = 'VoxelIndustry'
+        url = 'https://maven.ferenyr.info/artifactory/libs-release'
+    }
+    maven {
+        name = "Ladysnake Libs"
+        url = 'https://dl.bintray.com/ladysnake/libs'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    api "net.voxelindustry:brokkgui-core:${project.brokkgui_version}"
+
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.6.1')
+    testCompile('org.mockito:mockito-core:3.3.3')
+    testCompile('org.mockito:mockito-junit-jupiter:3.3.3')
+    testCompile('org.assertj:assertj-core:3.15.0')
+
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.6.1')
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include "fabric.mod.json"
+        expand "version": project.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "fabric.mod.json"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+}
+
+jar {
+    from "LICENSE"
+}
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+    publish {
+        repository {
+            repoKey = 'voxelindustry'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(file("${project.buildDir}/libs/${project.archives_base_name}-${project.brokkgui_version}.jar")) {
+                artifactId archivesBaseName
+
+                builtBy(remapJar)
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
+
+tasks.publish.dependsOn build
+artifactoryPublish.dependsOn build

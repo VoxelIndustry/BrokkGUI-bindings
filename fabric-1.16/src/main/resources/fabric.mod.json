@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "brokkguiwrapper",
+  "name": "BrokkGui Wrapper",
+  "version": "${version}",
+  "mixins": [
+    "brokkguiwrapper.client.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.8.8",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.voxelindustry.brokkgui.wrapper.BrokkGuiWrapperMod"
+    ],
+    "client": [
+      "net.voxelindustry.brokkgui.wrapper.BrokkGuiWrapperModClient"
+    ]
+  }
+}

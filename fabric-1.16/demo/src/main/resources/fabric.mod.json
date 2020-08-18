@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "brokkguidemo",
+  "name": "BrokkGui Demo Mod",
+  "version": "${version}",
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": ">=0.8.8",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "brokkguiwrapper": "*"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.voxelindustry.brokkgui.demo.BrokkGuiDemo"
+    ]
+  }
+}
