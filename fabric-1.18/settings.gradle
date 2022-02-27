@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        gradlePluginPortal()
+    }
+}
+
+if (new File(rootDir, '../../central').exists()) {
+    includeBuild('../../central') {
+        dependencySubstitution {
+            substitute module('net.voxelindustry:brokkgui-core') using project(':core')
+        }
+    }
+}
+
+include 'demo'
